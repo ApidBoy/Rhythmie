@@ -1,0 +1,30 @@
+* {
+    font-family: 'Raleway', sans-serif;
+    transition: .2s;
+    color: #fff;
+    outline: none;
+}
+
+body {
+    overflow-x: hidden;
+    background: #171717;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#musicArt {
+    visibility: hidden;
+}
