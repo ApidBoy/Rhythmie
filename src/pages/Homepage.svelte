@@ -328,17 +328,6 @@
 	#exploreMoreHome:hover {
 		color: #8d3eff;
 	}
-
-	::-webkit-scrollbar {
-		background: #000;
-		width: 5px;
-	}
-
-	::-webkit-scrollbar-thumb {
-		background: #222;
-		border-radius: 20px;
-	}
-
 	@media only screen and (max-width: 1740px) {
 		#homePage {
 			margin-top: 30px;

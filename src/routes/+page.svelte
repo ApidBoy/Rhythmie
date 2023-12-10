@@ -1,5 +1,19 @@
 <script>
+// @ts-nocheck
+
     import Homepage from "../pages/Homepage.svelte";
+    import { activeRouteDerived, setActiveRoute } from '../activeRoute';
+    import { onMount } from 'svelte';
+
+    let activeRoute = '';
+
+    activeRouteDerived.subscribe(value => {
+        activeRoute = value;
+    });
+
+    onMount(() => {
+        setActiveRoute('/');
+    });
 </script>
 
 <section>

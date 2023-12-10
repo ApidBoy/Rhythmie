@@ -28,3 +28,13 @@ img {
 #musicArt {
     visibility: hidden;
 }
+
+::-webkit-scrollbar {
+    background: transparent;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 20px;
+}

@@ -1,8 +1,25 @@
 <script>
+// @ts-nocheck
+
 	import icon from '$lib/res/icon.png';
 	import home from '$lib/res/home.png';
 	import explore from '$lib/res/explore.png';
 	import library from '$lib/res/library.png';
+	import { activeRouteDerived, setActiveRoute } from '../activeRoute';
+
+	let activeRoute = '';
+
+	activeRouteDerived.subscribe((value) => {
+		activeRoute = value;
+	});
+
+	const handleNavigation = (route) => {
+		setActiveRoute(route);
+	};
+
+	activeRouteDerived.subscribe((value) => {
+		activeRoute = value;
+	});
 </script>
 
 <nav id="sideNav">
@@ -14,19 +31,19 @@
 		</div>
 	</div>
 	<div id="navMenu">
-		<a href="/" id="active" class="navMenuItem">
+		<a href="/" id="navMenuItem" class:active={activeRoute === '/'} on:click={() => handleNavigation('/')}>
 			<div>
 				<img id="homeIcon" class="navMenuIcon" src={home} alt="Home icon" />
 				<span class="navMenuText"> Home </span>
 			</div>
 		</a>
-		<a href="/explore" class="navMenuItem">
+		<a href="/explore" id="navMenuItem" class:active={activeRoute === '/explore'} on:click={() => handleNavigation('/explore')}>
 			<div>
 				<img class="navMenuIcon" src={explore} alt="Explore" />
 				<span class="navMenuText"> Explore </span>
 			</div>
 		</a>
-		<a href="/mylibrary" class="navMenuItem">
+		<a href="/mylibrary" id="navMenuItem" class:active={activeRoute === '/mylibrary'} on:click={() => handleNavigation('/mylibrary')}>
 			<div>
 				<img class="navMenuIcon" src={library} alt="Your Library icon" />
 				<span class="navMenuText"> My Library </span>
@@ -78,8 +95,8 @@
 		padding: 10px;
 		overflow: hidden;
 		position: fixed;
-        top: 0;
-        left: 0;
+		top: 0;
+		left: 0;
 		background: #171717;
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
@@ -106,7 +123,7 @@
 		margin-left: 10px;
 		font-family: 'Josefin Sans', sans-serif;
 	}
-	.navMenuItem {
+	#navMenuItem {
 		font-size: 20px;
 		margin-top: 10px;
 		padding: 10px;
@@ -120,7 +137,7 @@
 		margin-left: 4px;
 		margin-top: 4px;
 	}
-	.navMenuItem:hover {
+	#navMenuItem:hover {
 		background: #a5a5a52a;
 		cursor: pointer;
 		border-radius: 10px;
@@ -204,7 +221,7 @@
 		margin-left: 2px;
 	}
 
-	#active {
+	.active {
 		background: rgba(165, 165, 165, 0.164);
 		cursor: pointer;
 		border-radius: 10px;
