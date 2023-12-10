@@ -3,6 +3,7 @@
 
 	import { activeRouteDerived, setActiveRoute } from '../../activeRoute';
 	import { onMount } from 'svelte';
+	import SearchPageSkeleton from '../../components/skeletons/explorepage/SearchPageSkeleton.svelte';
 
 	let activeRoute = '';
 
@@ -15,19 +16,18 @@
 	});
 </script>
 
-<section></section>
+<section>
+    <SearchPageSkeleton />
+</section>
 
 <style>
 	section {
-		overflow-x: hidden;
-		background: #050505;
-		border-radius: 60px;
-		border-top-right-radius: 0px;
-		color: #fff;
-		height: 89vh;
-		z-index: 0;
-		width: 85.9%;
-		position: absolute;
-		left: 285px;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: #050505;
+        color:#fff;
+        z-index: 0;
+        padding-left: 10vw;
+		background-image: linear-gradient(to bottom, #1f1f1f, #0f0f0f, #090909, #050505, #050505);
 	}
 </style>

@@ -36,10 +36,7 @@
 	#explorePage {
 		overflow: scroll;
 		overflow-x: hidden;
-		height: 90vh;
-		width: 85vw;
 		z-index: 0;
-		background-image: linear-gradient(to bottom, #1f1f1f, #0f0f0f, #090909, #050505, #050505);
 	}
 
 	#explorePageContents {
@@ -53,20 +50,17 @@
 
 	#topSearchesContainer {
 		margin-top: 40px;
-		margin-bottom: 40px;
 		display: flex;
 		flex-direction: column;
 		flex-wrap: nowrap;
 		justify-content: center;
-		width: 50vw;
+		width: 80vw;
 	}
 
 	#topSearchesText {
 		font-family: 'Josefin Sans', sans-serif;
 		font-size: 35px;
 		padding-bottom: 20px;
-		margin-bottom: 20px;
-		border-bottom: 1px solid #555;
 	}
 
 	#topSearchesIcon {
@@ -80,10 +74,9 @@
 	}
 
 	#mostRecentSearch {
-		font-size: 20px;
-		opacity: 0.5;
+		font-size: 16px;
+		opacity: 0.4;
 		display: flex;
-		margin-left: 10px;
 		margin-bottom: 10px;
 		align-items: center;
 	}

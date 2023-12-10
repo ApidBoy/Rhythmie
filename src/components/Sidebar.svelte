@@ -97,7 +97,6 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		background: #171717;
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-moz-user-select: none;
@@ -109,43 +108,54 @@
 		align-items: center;
 		flex-wrap: nowrap;
 		flex-direction: row;
-		padding-top: 4px;
+		padding-top: 10px;
 		padding-bottom: 10px;
-		border-bottom: 1px solid;
 		margin-bottom: 10px;
 	}
 	#icon {
-		width: 40px;
+		width: 2.2rem;
+		margin-left: 10px;
 	}
 	#barTitleText {
 		padding-top: 6px;
-		font-size: 26px;
+		font-size: 1.5rem;
 		margin-left: 10px;
 		font-family: 'Josefin Sans', sans-serif;
 	}
 	#navMenuItem {
-		font-size: 20px;
+		font-size: 1rem;
 		margin-top: 10px;
 		padding: 10px;
+		padding-left: 22px;
 		transition: 0.1s;
 		display: flex;
 		flex-direction: column;
 		margin-left: 2px;
+		width: 60%;
 	}
 	.navMenuIcon {
-		width: 25px;
+		width: 1.4rem;
 		margin-left: 4px;
 		margin-top: 4px;
+	}
+	#homeIcon {
+		width: 1.5rem;
 	}
 	#navMenuItem:hover {
 		background: #a5a5a52a;
 		cursor: pointer;
-		border-radius: 10px;
+		border-radius: 20rem;
 	}
 	.navMenuText {
 		margin-left: 10px;
 		position: relative;
 		top: -5px;
+	}
+	.active {
+		cursor: pointer;
+    	background: rgba(165, 165, 165, 0.164);
+		border-radius: 20rem;
+		box-shadow: 0 0 12px #111;
 	}
 	nav > hr {
 		margin-top: 20px;
@@ -155,6 +165,7 @@
 		font-size: 17px;
 		margin-top: 20px;
 		margin-left: 10px;
+		display: none;
 	}
 
 	#emptyQueue {
@@ -216,28 +227,15 @@
 		animation-iteration-count: infinite;
 	}
 
-	#homeIcon {
-		width: 27px;
-		margin-left: 2px;
-	}
-
-	.active {
-		background: rgba(165, 165, 165, 0.164);
-		cursor: pointer;
-		border-radius: 10px;
-		border-bottom: 2px solid #8b42ff;
-	}
 	#titleTextContainer {
 		display: flex;
 	}
 	#alpha {
 		color: #8d3eff;
 		font-size: 12px;
-		border: 1px solid;
 		padding: 10px;
-		margin-left: 10px;
+		padding-top: 2px;
 		font-weight: bold;
-		border-radius: 20px;
 	}
 
 	/* @keyframes spinningDisc {

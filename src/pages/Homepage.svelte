@@ -140,9 +140,6 @@
         </div>
 		<div id="homeSeparatorContainer">
 			<div id="homeSeparator"></div>
-			<a href="/explore" id="exploreMoreHomeContainer">
-				<div id="exploreMoreHome">Explore more music</div>
-			</a>
 		</div>
 	</div>
 </section>
@@ -151,11 +148,9 @@
 	#homePage {
 		overflow: scroll;
 		overflow-x: hidden;
-		width: 85vw;
 		z-index: 3;
 		display: flex;
 		justify-content: center;
-		background-image: linear-gradient(to bottom, #11052c, #050505, #050505, #050505, #050505);
 	}
 	#content {
 		margin-top: 12vh;
@@ -210,6 +205,7 @@
 	#lastPlayedSectionTitle {
 		font-size: 18px;
 		margin-left: 5px;
+		font-family: 'Josefin Sans', sans-serif;
 	}
 	#likedSongs {
 		height: 150px;
@@ -268,7 +264,7 @@
 	#homeCardContainer {
 		display: grid;
 		gap: 20px;
-		grid-template-columns: 200px 200px 200px 200px 200px 200px;
+		grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
 		grid-template-rows: 250px 250px 250px;
 	}
 	#likedSongs {

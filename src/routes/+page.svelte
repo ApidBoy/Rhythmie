@@ -17,20 +17,25 @@
 </script>
 
 <section>
+	<div id="searchText">- Search for a song, album or artist</div>
     <Homepage />
 </section>
 
 <style>
 	section {
+        min-height: 100vh;
         overflow-x: hidden;
         background: #050505;
-        border-radius: 60px;
-        border-top-right-radius: 0px;
         color:#fff;
-        height: 89vh;
         z-index: 0;
-        width: 85.9%;
+        padding-left: 10vw;
+		background-image: linear-gradient(to bottom, #11052c, #050505, #050505, #050505, #050505);
+	}
+	#searchText {
+		font-size: 1rem;
+		color: #777;
         position: absolute;
-        left: 285px;
+        top: 35px;
+        left: 770px;
 	}
 </style>

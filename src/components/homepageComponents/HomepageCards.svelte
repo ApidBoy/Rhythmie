@@ -1,53 +1,60 @@
 <script>
-    // @ts-nocheck
-    import { onDestroy, onMount, setContext } from 'svelte';
-    import { resultsStore } from '../../store.js';
+	// @ts-nocheck
+	import { onDestroy, onMount, setContext } from 'svelte';
+	import { resultsStore } from '../../store.js';
 	import HomepageCardsSkeleton from '../skeletons/homepage/HomepageCardsSkeleton.svelte';
-    let results = {};
+	import moreWhite from '$lib/res/arrow-right.png';
+	let results = {};
 
-    const unsubscribe = resultsStore.subscribe(updatedValue => {
-        results = updatedValue;
-    });
+	const unsubscribe = resultsStore.subscribe((updatedValue) => {
+		results = updatedValue;
+	});
 
-    function limitString(str, limit) {
-        if (str.length > limit) {
-            return str.slice(0, limit) + "...";
-        } else {
-            return str;
-        }
-    }
+	function limitString(str, limit) {
+		if (str.length > limit) {
+			return str.slice(0, limit) + '...';
+		} else {
+			return str;
+		}
+	}
 
-    onDestroy(() => {
-        unsubscribe();
-    });
+	onDestroy(() => {
+		unsubscribe();
+	});
 </script>
-    {#if results === undefined}
-    <HomepageCardsSkeleton />
-    {:else}
-    {#each results.data.albums as element, index}
-        {#if index < 18}
-            <div class="homeCard">
-                <img id="homeCardImg" src={element.image[1].link} alt="Card" />
-                <div id="homeCardTitle">{limitString(element.name, 18)}</div>
-                {#if element.artists && element.artists[0] && element.artists[0].name !== undefined}
-                    <div id="homeCardArtist">{limitString(element.artists[0].name, 14)}</div>
-                {:else}
-                    <div id="homeCardArtist">Various Artists</div>
-                {/if}
-            </div>
-        {/if}
-    {/each}
-    {/if}
+
+{#if results === undefined}
+	<HomepageCardsSkeleton />
+{:else}
+	{#each results.data.albums as element}
+		<div class="homeCard">
+			<img id="homeCardImg" src={element.image[1].link} alt="Card" />
+			<div id="homeCardTitle">{limitString(element.name, 18)}</div>
+			{#if element.artists && element.artists[0] && element.artists[0].name !== undefined}
+				<div id="homeCardArtist">{limitString(element.artists[0].name, 14)}</div>
+			{:else}
+				<div id="homeCardArtist">Various Artists</div>
+			{/if}
+		</div>
+	{/each}
+	<a href="/explore">
+		<div id="moreButton">
+			<img id="moreIcon" alt="More" src={moreWhite} />
+			<div id="homeCardTitle">Explore more</div>
+		</div>
+	</a>
+{/if}
+
 <style>
 	.homeCard {
 		height: 227px;
 		width: 180px;
 		text-align: left;
-        background: #171717;
+		background: #171717;
 		border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 	.homeCard:hover {
 		cursor: pointer;
@@ -59,21 +66,34 @@
 		width: 150px;
 		transition: 0.4s;
 		border-radius: 10px;
-        margin-top: 15px;
+		margin-top: 15px;
 	}
 	#homeCardTitle {
-		font-size: .9rem;
-        margin-top: 15px;
-        width: 80%;
+		font-size: 0.9rem;
+		margin-top: 15px;
+		width: 80%;
 		font-family: 'Josefin Sans', sans-serif;
 	}
 	#homeCardArtist {
 		margin-top: 5px;
-		font-size: .8rem;
-        width: 80%;
-        color: #999;
+		font-size: 0.8rem;
+		width: 80%;
+		color: #999;
 		font-family: 'Josefin Sans', sans-serif;
 	}
+	#moreIcon {
+		width: 30px;
+	}
+	#moreButton {
+		height: 227px;
+		width: 135px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-left: 40px;
+		border-radius: 20px;
+	}
+
 	@media only screen and (max-width: 880px) {
 		#homeCardImg,
 		.homeCard {
