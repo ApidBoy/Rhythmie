@@ -64,7 +64,7 @@
 								>
 									<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
 								</object>
-								{#if searchResults.topQuery.results[0].id === playerDataVariable.data[0].id}
+								{#if playerDataVariable.length !== 0 && searchResults.topQuery.results[0].id === playerDataVariable.data[0].id}
 								<div id="nowPlayingContainer">
 									<img draggable={false} id="nowPlaying" src={now} alt="" />
 								</div>
