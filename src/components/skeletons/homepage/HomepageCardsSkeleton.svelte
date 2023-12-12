@@ -106,14 +106,26 @@
         <div id="homeCardTitle"></div>
         <div id="homeCardArtist"></div>
     </div>
+
+    <div class="homeCard">
+        <div id="homeCardImg" />
+        <div id="homeCardTitle"></div>
+        <div id="homeCardArtist"></div>
+    </div>
+
+    <div class="homeCard">
+        <div id="homeCardImg" />
+        <div id="homeCardTitle"></div>
+        <div id="homeCardArtist"></div>
+    </div>
 </section>
 
 <style>
 	section {
 		display: grid;
 		gap: 20px;
-		grid-template-columns: 200px 200px 200px 200px 200px 200px;
-		grid-template-rows: 250px 250px;
+		grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
+		grid-template-rows: 250px 250px 250px;
 	}
 	.homeCard {
 		height: 230px;

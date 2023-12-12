@@ -4,13 +4,14 @@
     import edit from '$lib/res/pencil.png';
     import play from '$lib/res/play-button.png';
     import heart from '$lib/res/heart.png';
-    import art from '$lib/res/default.png';
+    import defaultImg from '$lib/res/default.png';
     import { onMount } from 'svelte';
     import { resultsStore } from '../store.js';
 	import HomepageCardsSkeleton from '../components/skeletons/homepage/HomepageCardsSkeleton.svelte';
 
     let greeting = 'Hey There!';
     let results = undefined;
+	let mostRecentSong = [];
     
     resultsStore.set(results);
     let index = 0;
@@ -47,6 +48,9 @@
         resultsStore.subscribe(value => {
             results = value;
         });
+		if (localStorage.getItem('mostRecentSong')) {
+			mostRecentSong = JSON.parse(localStorage.getItem('mostRecentSong'));
+		}
     });
 
 </script>
@@ -100,11 +104,26 @@
 				<div id="lastPlayedSectionTitle">Pick up where you left off</div>
 				<div id="lastPlayed">
 					<div id="lastPlayedArt">
-						<img alt="Music art" src={art} />
+						{#if mostRecentSong.length !== 0}
+						<img alt="Music art" src={mostRecentSong.image[1].link} />
+						{:else}
+						<img alt="Music art" src={defaultImg} />
+						{/if}
 					</div>
 					<div id="lastPlayedDetails">
-						<div id="lastPlayedTitle">Play something awesome!</div>
-						<div id="lastPlayedArtist">Your last played song will stay here.</div>
+						<div id="lastPlayedTitle">
+							{#if mostRecentSong.length !== 0}
+							{mostRecentSong.name}
+							{:else}
+							Play something awesome!
+							{/if}
+						</div>
+						<div id="lastPlayedArtist">
+							{#if mostRecentSong.length !== 0}
+							{mostRecentSong.primaryArtists}
+							{:else}
+							Your last played song will stay here.
+							{/if}</div>
 					</div>
 					<div id="playButtonEffectContainer">
 						<img alt="Play" id="playButtonEffect" src={play} />
@@ -128,7 +147,7 @@
 		</div>
 		<div id="homePageTitleContainer">
 			<div id="homePageTitle">
-				Most Popular <img
+				Trending now <img
 					id="fireEmoji"
 					src="https://c.tenor.com/8McIGu0Tf_QAAAAi/fire-joypixels.gif"
 					alt=""

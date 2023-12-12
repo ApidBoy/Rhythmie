@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
-	import { onDestroy, onMount, setContext } from 'svelte';
-	import { resultsStore } from '../../store.js';
+	import { onDestroy } from 'svelte';
+	import { resultsStore, limitString } from '../../store.js';
 	import HomepageCardsSkeleton from '../skeletons/homepage/HomepageCardsSkeleton.svelte';
 	import moreWhite from '$lib/res/arrow-right.png';
 	let results = {};
@@ -9,14 +9,6 @@
 	const unsubscribe = resultsStore.subscribe((updatedValue) => {
 		results = updatedValue;
 	});
-
-	function limitString(str, limit) {
-		if (str.length > limit) {
-			return str.slice(0, limit) + '...';
-		} else {
-			return str;
-		}
-	}
 
 	onDestroy(() => {
 		unsubscribe();

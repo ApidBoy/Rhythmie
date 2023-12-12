@@ -1,7 +1,43 @@
 <script>
+// @ts-nocheck
 	import icon from '$lib/res/icon.png';
 	import search from '$lib/res/search.png';
 	import accountIcon from '$lib/res/account.png';
+	import { searchStore, searchResultStore } from '../store';
+	import { goto } from '$app/navigation';
+
+	function debounce(func, delay) {
+		let timeoutId;
+		return function (...args) {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+				func.apply(this, args);
+			}, delay);
+		};
+	}
+	let searchText = '';
+
+	const debouncedSearch = debounce(() => {
+    	goto('/explore/topresults');
+		searchStore.set(searchText);
+		handleSearch();
+		if(searchText === '')
+    		goto('/explore');
+  	}, 1000);
+
+	const handleInput = (event) => {
+    	searchText = event.target.value;
+		debouncedSearch();
+	}
+
+	const handleSearch = async () => {
+		await fetch(`https://saavn.me/search/all?query=${searchText}`)
+		.then((response) => response.json())
+		.then((data) => {
+			searchResultStore.set(data.data);
+		});
+	}
+
 </script>
 
 <div id="topBar">
@@ -14,7 +50,7 @@
 		</a>
 	</div>
 	<div id="searchBar">
-		<input placeholder="What's on your mind?" id="searchBox" type="text" />
+		<input bind:value={searchText} on:input={handleInput} maxlength="46" placeholder="What's on your mind?" id="searchBox" type="text" />
 		<span id="clearBox" class="material-symbols-outlined">close</span>
 	</div>
 	<div id="userAccountPanel">

@@ -32,8 +32,8 @@
 		background-image: linear-gradient(to bottom, #11052c, #050505, #050505, #050505, #050505);
 	}
 	#searchText {
+        opacity: .4;
 		font-size: 1rem;
-		color: #777;
         position: absolute;
         top: 35px;
         left: 770px;

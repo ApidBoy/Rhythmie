@@ -37,13 +37,13 @@
 				<span class="navMenuText"> Home </span>
 			</div>
 		</a>
-		<a href="/explore" id="navMenuItem" class:active={activeRoute === '/explore'} on:click={() => handleNavigation('/explore')}>
+		<a href="/explore" id="navMenuItem" class:active={activeRoute.includes('/explore')} on:click={() => handleNavigation('/explore')}>
 			<div>
 				<img class="navMenuIcon" src={explore} alt="Explore" />
 				<span class="navMenuText"> Explore </span>
 			</div>
 		</a>
-		<a href="/mylibrary" id="navMenuItem" class:active={activeRoute === '/mylibrary'} on:click={() => handleNavigation('/mylibrary')}>
+		<a href="/mylibrary" id="navMenuItem" class:active={activeRoute.includes('/mylibrary')} on:click={() => handleNavigation('/mylibrary')}>
 			<div>
 				<img class="navMenuIcon" src={library} alt="Your Library icon" />
 				<span class="navMenuText"> My Library </span>

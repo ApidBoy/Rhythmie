@@ -1,9 +1,5 @@
 <script>
 	// @ts-nocheck
-
-	import { onMount } from 'svelte';
-	import TopSearches from '../components/explorepageComponents/TopSearches.svelte';
-	import { topSearchesStore } from '../store';
 </script>
 
 <section id="explorePage">
