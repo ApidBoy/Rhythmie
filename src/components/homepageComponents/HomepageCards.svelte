@@ -51,7 +51,8 @@
 	.homeCard:hover {
 		cursor: pointer;
 		transform: scale(1.04);
-		box-shadow: 0 0 15px #353535;
+		/* box-shadow: 0 0 15px #353535; */
+		opacity: .7;
 	}
 	#homeCardImg {
 		height: 150px;

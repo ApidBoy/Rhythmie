@@ -29,7 +29,7 @@
         color:#fff;
         z-index: 0;
         padding-left: 10vw;
-		background-image: linear-gradient(to bottom, #11052c, #050505, #050505, #050505, #050505);
+		background-image: linear-gradient(to bottom, #1c0949, #050505, #050505, #050505, #050505);
 	}
 	#searchText {
         opacity: .4;

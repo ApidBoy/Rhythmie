@@ -23,13 +23,6 @@
 </script>
 
 <nav id="sideNav">
-	<div id="barTitle">
-		<img id="icon" src={icon} alt="Rhythmie icon" />
-		<div id="titleTextContainer">
-			<div id="barTitleText">Rhythmie</div>
-			<div id="alpha">In-Dev</div>
-		</div>
-	</div>
 	<div id="navMenu">
 		<a href="/" id="navMenuItem" class:active={activeRoute === '/'} on:click={() => handleNavigation('/')}>
 			<div>
@@ -95,32 +88,13 @@
 		padding: 10px;
 		overflow: hidden;
 		position: fixed;
-		top: 0;
+		top: 64px;
 		left: 0;
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
-	}
-	#barTitle {
-		display: flex;
-		align-items: center;
-		flex-wrap: nowrap;
-		flex-direction: row;
-		padding-top: 10px;
-		padding-bottom: 10px;
-		margin-bottom: 10px;
-	}
-	#icon {
-		width: 2.2rem;
-		margin-left: 10px;
-	}
-	#barTitleText {
-		padding-top: 6px;
-		font-size: 1.5rem;
-		margin-left: 10px;
-		font-family: 'Josefin Sans', sans-serif;
 	}
 	#navMenuItem {
 		font-size: 1rem;
@@ -227,16 +201,6 @@
 		animation-iteration-count: infinite;
 	}
 
-	#titleTextContainer {
-		display: flex;
-	}
-	#alpha {
-		color: #8d3eff;
-		font-size: 12px;
-		padding: 10px;
-		padding-top: 2px;
-		font-weight: bold;
-	}
 
 	/* @keyframes spinningDisc {
   from {

@@ -37,16 +37,16 @@
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<span on:click={() => goto('/explore')} id="searchBack" class="material-symbols-outlined"> arrow_back_ios </span>
 				<div id="activeCategory" class="searchCategory">
-					<a href="/explore/topresults">Top Results</a>
+					<button on:click={() => goto('/explore/topresults')}>Top Results</button>
 				</div>
 				<div class="searchCategory">
-					<a href="/explore/songs">Songs</a>
+					<button on:click={() => goto('/explore/songs')}>Songs</button>
 				</div>
 				<div class="searchCategory">
-					<a href="/explore/albums">Albums</a>
+					<button on:click={() => goto('/explore/albums')}>Albums</button>
 				</div>
 				<div class="searchCategory">
-					<a href="/explore/artists">Artists</a>
+					<button on:click={() => goto('/explore/artists')}>Artists</button>
 				</div>
 			</div>
 
@@ -582,8 +582,12 @@
 		user-select: none;
 		padding: 9px 20px;
 	}
-	.searchCategory > a {
+	.searchCategory > button {
 		font-family: 'Josefin Sans', sans-serif;
+		font-size: 1rem;
+		border: none;
+		color: #fff;
+		background: none;
 	}
 
 	#activeCategory {
@@ -593,7 +597,7 @@
 		cursor: pointer;
 	}
 
-	#activeCategory > a {
+	#activeCategory > button {
 		color: #000;
 	}
 
@@ -603,7 +607,8 @@
 	}
 
 	@media (hover: hover) {
-		.searchCategory:hover {
+		.searchCategory:hover, .searchCategory > button:hover {
+			cursor: pointer;
 			opacity: 1;
 		}
 		.searchResults:hover > #musicArtContainer > #searchedMusicArt {

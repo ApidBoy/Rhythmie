@@ -50,6 +50,10 @@
         });
 		if (localStorage.getItem('mostRecentSong')) {
 			mostRecentSong = JSON.parse(localStorage.getItem('mostRecentSong'));
+			document.getElementById("lastPlayedPillContainer").style.background=`url(${mostRecentSong.image[2].link})`;
+			document.getElementById("lastPlayedPillContainer").style.backgroundRepeat="no-repeat";
+			document.getElementById("lastPlayedPillContainer").style.backgroundSize="cover";
+			document.getElementById("lastPlayedPillContainer").style.backgroundPosition="center";
 		}
     });
 
@@ -102,31 +106,33 @@
 		<div id="secondaryHomeSection">
 			<div id="lastPlayedContainer">
 				<div id="lastPlayedSectionTitle">Pick up where you left off</div>
-				<div id="lastPlayed">
-					<div id="lastPlayedArt">
-						{#if mostRecentSong.length !== 0}
-						<img alt="Music art" src={mostRecentSong.image[1].link} />
-						{:else}
-						<img alt="Music art" src={defaultImg} />
-						{/if}
-					</div>
-					<div id="lastPlayedDetails">
-						<div id="lastPlayedTitle">
+				<div id="lastPlayedPillContainer">
+					<div id="lastPlayed">
+						<div id="lastPlayedArt">
 							{#if mostRecentSong.length !== 0}
-							{mostRecentSong.name}
+							<img alt="Music art" src={mostRecentSong.image[1].link} />
 							{:else}
-							Play something awesome!
+							<img alt="Music art" src={defaultImg} />
 							{/if}
 						</div>
-						<div id="lastPlayedArtist">
-							{#if mostRecentSong.length !== 0}
-							{mostRecentSong.primaryArtists}
-							{:else}
-							Your last played song will stay here.
-							{/if}</div>
-					</div>
-					<div id="playButtonEffectContainer">
-						<img alt="Play" id="playButtonEffect" src={play} />
+						<div id="lastPlayedDetails">
+							<div id="lastPlayedTitle">
+								{#if mostRecentSong.length !== 0}
+								{mostRecentSong.name}
+								{:else}
+								Play something awesome!
+								{/if}
+							</div>
+							<div id="lastPlayedArtist">
+								{#if mostRecentSong.length !== 0}
+								{mostRecentSong.primaryArtists}
+								{:else}
+								Your last played song will stay here.
+								{/if}</div>
+						</div>
+						<div id="playButtonEffectContainer">
+							<img alt="Play" id="playButtonEffect" src={play} />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -214,25 +220,48 @@
 		transform: scale(1.1);
 	}
 	#lastPlayed {
+		height: 100%;
+		width: 100%;
+		backdrop-filter: blur(7px) contrast(130%) brightness(28%);
+		/* box-shadow: 0 0 20px #000 inset; */
+		/* background: #1f1f1f; */
+		/* border: 2px solid #333; */
+	}
+	#lastPlayedPillContainer {
 		height: 140px;
 		width: 620px;
-		border-radius: 40px;
+		border-top-left-radius: 400px;
+		border-bottom-left-radius: 400px;
 		margin-top: 20px;
-		margin-right: 20px;
-		background: #171717;
+		margin-right: 5px;
+		overflow: hidden;
+		border: 2px solid #444;
 	}
 	#lastPlayedSectionTitle {
 		font-size: 18px;
 		margin-left: 5px;
 		font-family: 'Josefin Sans', sans-serif;
 	}
-	#likedSongs {
-		height: 150px;
+	#likedSongsButtonContainer {
+		background: url("https://w0.peakpx.com/wallpaper/395/439/HD-wallpaper-purple-heart-galaxy-galaxy-hearts-purple-thumbnail.jpg");
+		overflow: hidden;
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 140px;
 		width: 620px;
-		border-radius: 40px;
-		margin-top: 40px;
+		margin-top: 39px;
+		border-top-right-radius: 400px;
+		border-bottom-right-radius: 400px;
+		border: 2px solid #444;
+	}
+	#likedSongs {
+		height: 100%;
+		width: 100%;
 		margin-right: 20px;
-		background: #171717;
+		backdrop-filter: blur(7px) contrast(130%) brightness(70%);
+		/* box-shadow: 0 0 20px #000 inset; */
+		/* background: #1f1f1f; */
+		/* border: 2px solid #333; */
 	}
 
 	#secondaryHomeSection {
@@ -245,10 +274,18 @@
 		padding-top: 5px;
 	}
 
-	#lastPlayed:hover,
-	#likedSongs:hover {
-		transform: scale(1.02);
-		box-shadow: 0 0 10px #222;
+	#lastPlayedPillContainer:hover {
+		/* backdrop-filter: blur(0) contrast(130%) brightness(20%); */
+		transform: scale(1.03);
+		border-radius: 400px;
+		margin-right: 40px;
+		cursor: pointer;
+	}
+	#likedSongsButtonContainer:hover {
+		/* backdrop-filter: blur(4px) contrast(130%) brightness(20%); */
+		transform: scale(1.03);
+		border-radius: 400px;
+		margin-left: 40px;
 		cursor: pointer;
 	}
 
@@ -258,7 +295,7 @@
 
 	#lastPlayedArt > img {
 		width: 115px;
-		border-radius: 30px;
+		border-radius: 300px;
 		margin-left: 20px;
 		background: #0a0a0a;
 	}
@@ -273,12 +310,14 @@
 		font-family: 'Josefin Sans', sans-serif;
 		font-size: 25px;
 		margin-bottom: 7px;
+		text-shadow: 0 0 12px #000;
 	}
 	#lastPlayedArtist,
 	#likedSongsNumber {
 		font-family: 'Josefin Sans', sans-serif;
-		color: #6f16ff;
+		color: #7d2cff;
 		font-size: 18px;
+		text-shadow: 0 0 12px #000;
 	}
 	#homeCardContainer {
 		display: grid;
@@ -294,7 +333,7 @@
 		margin-left: 20px;
 		background: #0a0a0a;
 		padding: 25px;
-		border-radius: 30px;
+		border-radius: 300px;
 	}
 	#homePageTitleContainer {
 		font-size: 25px;

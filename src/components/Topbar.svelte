@@ -41,13 +41,12 @@
 </script>
 
 <div id="topBar">
-	<div id="topbarTextContainer">
-		<img id="barIcon" src={icon} alt="Rhythmie icon" />
-		<div id="topbarText">Rhythmie</div>
-		<div id="barAlpha">In-Dev</div>
-		<a href="/explore">
-			<img src={search} id="searchIcon" alt="Search" />
-		</a>
+	<div id="barTitle">
+		<img id="icon" src={icon} alt="Rhythmie icon" />
+		<div id="titleTextContainer">
+			<div id="barTitleText">Rhythmie</div>
+			<div id="alpha">In-Dev</div>
+		</div>
 	</div>
 	<div id="searchBar">
 		<input bind:value={searchText} on:input={handleInput} maxlength="46" placeholder="What's on your mind?" id="searchBox" type="text" />
@@ -70,10 +69,41 @@
 		height: 63px;
 		z-index: 3;
 		background: transparent;
-		padding-top: 10px;
+		padding-top: 2px;
+		display: flex;
+	}
+	#barTitle {
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+		flex-direction: row;
+		padding-top: 26px;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		margin-left: 10px;
+	}
+	#icon {
+		width: 2.2rem;
+		margin-left: 10px;
+	}
+	#barTitleText {
+		padding-top: 6px;
+		font-size: 1.5rem;
+		margin-left: 10px;
+		font-family: 'Josefin Sans', sans-serif;
+	}
+	#titleTextContainer {
+		display: flex;
+	}
+	#alpha {
+		color: #8d3eff;
+		font-size: 12px;
+		padding: 10px;
+		padding-top: 2px;
+		font-weight: bold;
 	}
 	#searchBar {
-		margin-left: 15%;
+		margin-left: 3.2%;
 	}
 	#searchBox {
 		padding: 7px;
@@ -83,14 +113,16 @@
 		font-size: 17px;
 		outline: none;
 		border-radius: 15px;
-		border: none;
-		background: #222;
+		border: 1px solid #444;
 		margin-top: 15px;
 		caret-color: #6f16ff;
 		filter: drop-shadow(0 0 20px #000);
+		background: #1717171e;
+		/* background: #171717b0; */
+		backdrop-filter: blur(14px);
 	}
 	#searchBox:focus {
-		box-shadow: 0 0 15px #383344;
+		box-shadow: 0 0 15px #000;
 	}
 	#userAccountPanel {
 		position: absolute;

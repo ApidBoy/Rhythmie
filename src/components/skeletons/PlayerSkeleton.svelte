@@ -73,6 +73,7 @@
             box-shadow: 0 0 20px #000;
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
+            opacity: 0;
         }
     
     

@@ -28,6 +28,6 @@
         color:#fff;
         z-index: 0;
         padding-left: 10vw;
-		background-image: linear-gradient(to bottom, #1f1f1f, #0f0f0f, #090909, #050505, #050505);
+		background-image: linear-gradient(to bottom, #302f2f, #1b1b1b, #090909, #050505, #050505);
 	}
 </style>

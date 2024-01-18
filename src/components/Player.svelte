@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
 	import fav from '$lib/res/unfav.png';
 	import dots from '$lib/res/dots.png';
@@ -11,9 +11,26 @@
 	import pause from '$lib/res/pause.png';
 	import next from '$lib/res/next.png';
 	import repeat from '$lib/res/repeat.png';
+	import uparrow from '$lib/res/up-arrow.png';
 	import { playerData, converter } from '../store';
 	import PlayerSkeleton from './skeletons/PlayerSkeleton.svelte';
 	import { onMount } from 'svelte';
+	import { activeRouteDerived, setActiveRoute } from '../activeRoute';
+
+	let activeRoute = '';
+	let fullscreenPlayerToggle = true;
+
+	activeRouteDerived.subscribe((value) => {
+		activeRoute = value;
+	});
+
+	const handleNavigation = (route) => {
+		setActiveRoute(route);
+	};
+
+	activeRouteDerived.subscribe((value) => {
+		activeRoute = value;
+	});
 
 	let songDetails;
 	let audio;
@@ -24,88 +41,114 @@
 	let playPauseIcon = play;
 
 	playerData.subscribe((value) => {
-		console.log("Player data: ", value);
+		console.log('Player data: ', value);
 		songDetails = value;
 		setTimeout(() => {
-			if(songDetails.length !== 0) {
+			if (songDetails.length !== 0) {
 				localStorage.setItem('mostRecentSong', JSON.stringify(songDetails.data[0]));
 				playPause();
 			}
 		}, 1000);
 	});
 
-	let interval = () => setInterval(() => {
-		seekbar.value = audio.currentTime;
-		currentDuration = converter(audio.currentTime);
-		if (audio.currentTime >= songDetails.data[0].duration) {
-			clearInterval(interval);
-			playState = false;
-			playPause();
-		}
-	}, 500);
+	let interval = () =>
+		setInterval(() => {
+			seekbar.value = audio.currentTime;
+			currentDuration = converter(audio.currentTime);
+			if (audio.currentTime >= songDetails.data[0].duration) {
+				clearInterval(interval);
+				playState = false;
+				playPause();
+			}
+		}, 500);
 
 	const updateSeek = () => {
 		audio.currentTime = seekbar.value;
-	}
+	};
 	const playPause = () => {
-		if(playState) {
+		if (playState) {
 			audio.play();
 			interval();
 			playState = false;
 			playPauseIcon = pause;
-			playButton.style.margin = "5px 2px";
+			playButton.style.margin = '5px 2px';
 		} else {
 			audio.pause();
 			playState = true;
 			playPauseIcon = play;
-			playButton.style.margin = "5px 10px";
+			playButton.style.margin = '5px 10px';
+		}
+	};
+	const handleArtClick = () => {
+		if(fullscreenPlayerToggle) {
+			document.getElementById('songArt').style.opacity = .4;
+			document.getElementById('uparrow').style.opacity = 1;
+			document.getElementById('songInfo').style.top = "14px";
+			document.getElementById('songName').innerHTML = "Now playing";
+			document.getElementById('songArtist').style.visibility = "hidden";
+			// document.getElementById('songArtist').innerHTML = "Click on this button to disable";
+			handleNavigation('/nowplaying');
+			fullscreenPlayerToggle = false;
+		} else {
+			document.getElementById('songArt').style.opacity = 1;
+			document.getElementById('uparrow').style.opacity = 0;
+			document.getElementById('songInfo').style.top = "0";
+			document.getElementById('songArtist').style.visibility = "visible";
+			document.getElementById('songName').innerHTML = songDetails.data[0].name;
+			document.getElementById('songArtist').innerHTML = songDetails.data[0].primaryArtists;
+			window.history.back();
+			fullscreenPlayerToggle = true;
 		}
 	}
-
 </script>
 
-
 {#if songDetails.length !== 0}
-
-<div id="bottomBar">
-<audio bind:this={audio} src={songDetails.data[0].downloadUrl[2].link}></audio>
-	<div id="musicInfo">
-		<img src={songDetails.data[0].image[1].link} draggable={false} id="songArt" alt="Music art" />
-		<div id="songInfo">
-			<div id="songTitle">
-				<span>{songDetails.data[0].name}</span>
-				<div id="songArtist">{songDetails.data[0].primaryArtists}</div>
+	<div id="bottomBar">
+		<audio bind:this={audio} src={songDetails.data[0].downloadUrl[2].link}></audio>
+		<div id="musicInfo">
+			<a href="/nowplaying" id="songArtContainer" class:active={activeRoute.includes('/nowplaying')} on:click={handleArtClick}>	
+				<img id="uparrow" src={uparrow} alt=''/>
+				<img src={songDetails.data[0].image[1].link} draggable={false} id="songArt" alt="Music art" />
+			</a>
+			<div id="songInfo">
+				<div id="songTitle">
+					<span id="songName">{songDetails.data[0].name}</span>
+					<div id="songArtist">{songDetails.data[0].primaryArtists}</div>
+				</div>
 			</div>
 		</div>
-	</div>
-    <div id="musicControls">
-      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <div id="musicComponent">
-        <img draggable={false} id="shuffleButton" src={shuffle} alt="Shuffle" />
-        <img
-          draggable={false}
-          id="prevButton"
-          src={prev}
-          alt="Previous"
-        />
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <img
-          draggable={false}
-          id="playPause"
-          src={playPauseIcon}
-          alt="Play/Pause Button"
-		  on:click={playPause}
-		  bind:this={playButton}
-        />
-        <img draggable={false} id="nextButton" src={next} alt="Next" />
-        <img draggable={false} id="repeatButton" src={repeat} alt="Repeat" />
-      </div>
-    </div>
-	<div id="totalSeek">
+		<div id="musicControls">
+			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+			<div id="musicComponent">
+				<img draggable={false} id="shuffleButton" src={shuffle} alt="Shuffle" />
+				<img draggable={false} id="prevButton" src={prev} alt="Previous" />
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<img
+					draggable={false}
+					id="playPause"
+					src={playPauseIcon}
+					alt="Play/Pause Button"
+					on:click={playPause}
+					bind:this={playButton}
+				/>
+				<img draggable={false} id="nextButton" src={next} alt="Next" />
+				<img draggable={false} id="repeatButton" src={repeat} alt="Repeat" />
+			</div>
+		</div>
+		<div id="totalSeek">
 			<div id="currentDuration">{currentDuration}</div>
-		<input bind:this={seekbar} on:input={updateSeek} id="seekBar" type="range" min="0" max={songDetails.data[0].duration} step="1" value="0" />
+			<input
+				bind:this={seekbar}
+				on:input={updateSeek}
+				id="seekBar"
+				type="range"
+				min="0"
+				max={songDetails.data[0].duration}
+				step="1"
+				value="0"
+			/>
 			<div id="totalDuration">{converter(songDetails.data[0].duration)}</div>
-	</div>
+		</div>
 		<div id="bottomIcons">
 			<img draggable={false} id="favButton" src={fav} alt="" />
 			<img draggable={false} id="bottomMenu" src={dots} alt="" />
@@ -115,12 +158,9 @@
 				<input id="volumeSlider" type="range" min="0.0" max="1.0" step="0.1" value="1" />
 			</div>
 		</div>
-</div>
-
+	</div>
 {:else}
-
 	<PlayerSkeleton />
-
 {/if}
 
 <style>
@@ -133,40 +173,40 @@
 		align-items: center;
 		flex-direction: column;
 		z-index: 5;
-		background: #0a0a0a;
+		/* background: #0a0a0a6b; */
+		background: #0a0a0ae0;
+		backdrop-filter: blur(12px);
 		box-shadow: 0 0 20px #000;
 		border-top-left-radius: 30px;
 		border-top-right-radius: 30px;
 	}
 
+	#musicComponent {
+		margin: 18px 20px 20px 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-#musicComponent {
-  margin: 18px 20px 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#playPause {
-  width: 26px;
-  margin: 5px 2px;
-}
-#playPause:hover {
-  transform: scale(1.08);
-  cursor: pointer;
-}
-#nextButton,
-#prevButton {
-  transition: 0.4s;
-  width: 20px;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-#repeatButton,
-#shuffleButton {
-  width: 18px;
-}
-
+	#playPause {
+		width: 26px;
+		margin: 5px 2px;
+	}
+	#playPause:hover {
+		transform: scale(1.08);
+		cursor: pointer;
+	}
+	#nextButton,
+	#prevButton {
+		transition: 0.4s;
+		width: 20px;
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	#repeatButton,
+	#shuffleButton {
+		width: 18px;
+	}
 
 	#musicInfo {
 		font-size: 20px;
@@ -175,26 +215,45 @@
 		bottom: 28px;
 		color: #fff;
 	}
+	#songArtContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		height: 100%;
+		position: absolute;
+		left: 20px;
+		bottom: 0px;
+	}
+	#uparrow {
+		z-index: 2;
+		position: absolute;
+		opacity: 0;
+	}
 	#songArt {
 		height: 70px;
 		width: 70px;
-        background: #000;
+		background: #000;
 		z-index: 5;
-		border-radius: .8rem;
-		position: absolute;
-		left: 20px;
-        bottom: -12px;
+		border-radius: 0.8rem;
+		z-index: 1;
+		opacity: 1;
 	}
-	#songArt:hover {
+	#songArtContainer:hover {
 		cursor: pointer;
-		border-radius: 6px;
 		transform: scale(1.05);
-		margin-top: -90px;
+	}
+	#songArtContainer:hover > #songArt {
+		opacity: .4;
+	}
+	#songArtContainer:hover > #uparrow {
+		opacity: 1;
 	}
 	#songInfo {
 		position: relative;
 		left: 110px;
 		width: 100%;
+		transition: .4s;
 	}
 	#songTitle {
 		text-shadow: 0 0 10px #777;
@@ -220,16 +279,16 @@
 		bottom: 20px;
 		z-index: 2;
 		transition: 0.2s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
-    #totalSeek > div {
+	#totalSeek > div {
 		font-family: 'Montserrat', sans-serif;
-        font-size: .8rem;
+		font-size: 0.8rem;
 		width: 3rem;
 		overflow: hidden;
-    }
+	}
 	#seekBar {
 		-webkit-appearance: none;
 		width: 100%;
@@ -256,7 +315,7 @@
 	#bottomIcons {
 		position: fixed;
 		bottom: 35px;
-		right: 8.8%;
+		right: 8.2%;
 	}
 	#bottomIcons > img {
 		width: 25px;
@@ -267,8 +326,8 @@
 		background-color: #333;
 		border-radius: 20px;
 		position: fixed;
-		bottom: 4.5%;
-		right: 2%;
+		bottom: 44%;
+		right: 1.6%;
 		overflow: hidden;
 		transition: 0.4s;
 	}
@@ -313,5 +372,4 @@
 		cursor: pointer;
 		transform: scale(1.05);
 	}
-
 </style>
