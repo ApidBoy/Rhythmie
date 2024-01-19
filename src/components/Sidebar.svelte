@@ -5,9 +5,17 @@
 	import home from '$lib/res/home.png';
 	import explore from '$lib/res/explore.png';
 	import library from '$lib/res/library.png';
+	import pauseIcon from '$lib/res/pause-button.png';
+	import playIcon from '$lib/res/play-button.png';
+	import defaultImg from '$lib/res/default.png';
+	import arrowIcon from '$lib/res/down.png';
 	import { activeRouteDerived, setActiveRoute } from '../activeRoute';
+	import { playerData, limitString } from '../store';
+    import { onMount } from 'svelte';
 
 	let activeRoute = '';
+	let currentSong = [];
+	let queueOpen = true;
 
 	activeRouteDerived.subscribe((value) => {
 		activeRoute = value;
@@ -20,6 +28,26 @@
 	activeRouteDerived.subscribe((value) => {
 		activeRoute = value;
 	});
+
+	const queueStateHandler = () => {
+		if (queueOpen) {
+			document.getElementById("playQueueContainer").style.height = "60px";
+			document.getElementById("expand").style.transform = "rotateZ(180deg)";
+			queueOpen = false;
+		} else {
+			document.getElementById("playQueueContainer").style.height = "auto";
+			document.getElementById("expand").style.transform = "rotateZ(0deg)";
+			queueOpen = true;
+		}
+	}
+
+
+	onMount(() => {
+		if (localStorage.getItem('mostRecentSong')) {
+			currentSong = JSON.parse(localStorage.getItem('mostRecentSong'));
+		}
+	});
+
 </script>
 
 <nav id="sideNav">
@@ -43,38 +71,108 @@
 			</div>
 		</a>
 	</div>
-	<div id="playQueue">
-		<div id="playQueueTitle">Your Queue</div>
-		<!-- {props.queue.songName !== undefined &&
-        <div id="queueContainer">
-            <div id="queueItem">
-                <div id="queueItemArtContainer">
-                    <object id="queueItemArt" data={props.queue.songArt} type="image/png">
-                        <img id="queueItemArt" src={defaultImg} onError={defaultImg}  alt={''}/>
-                    </object>
-                </div>
-                <div id="queueItemInfo">
-                    <div id="queueItemTitle">{props.queue.songName}</div>
-                    <div id="queueItemArtist">{props.queue.songArtist}</div>
-                </div>
-                <div id="nowPlayingIconContainer">
-                    <img src={nowPlayingIcon} id="nowPlayingIcon"/>
-                </div>
-            </div>
-            <div id="clearQueue">
-                <div id="clearQueueButton">
-                    Clear queue
-                </div>
-            </div>
-        </div>
-        }
-        {props.queue.songName === undefined &&
-        <div id="emptyQueue">
-            <div id="createQueueButton">
-                Create a queue
-            </div>
-        </div>
-        } -->
+	<div id="playQueueContainer">
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div id="playQueue">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div id="playQueueTitle" on:click={queueStateHandler}>Your Queue
+				<img id="expand" src={arrowIcon} alt='' />
+			</div>
+			<div id="queueContainer">
+				<div id="queueItem" class="activeItem">
+					<div id="queueItemArtContainer">
+						{#if currentSong.length !== 0}
+							<object id="queueItemArt" data={currentSong.image[0].link} type="image/png" aria-label="">
+								<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+							</object>
+						{:else}
+							<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+								<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+							</object>
+						{/if}
+					</div>
+					<div id="queueItemInfo">
+						{#if currentSong.length !== 0}
+							<div id="queueItemTitle">{limitString(currentSong.name, 16)}</div>
+							<div id="queueItemArtist">{limitString(currentSong.primaryArtists, 16)}</div>
+						{:else}
+						<div id="queueItemTitle">Song name</div>
+						<div id="queueItemArtist">Song Artist</div>
+						{/if}
+
+					</div>
+					<div id="nowPlayingIconContainer">
+						<img src={pauseIcon} id="nowPlayingIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="clearQueue">
+					<div id="clearQueueButton">
+						Clear queue
+					</div>
+				</div>
+			</div>
+			<div id="emptyQueue">
+				<div id="createQueueButton">
+					Create a queue
+				</div>
+			</div>
+		</div>
 	</div>
 </nav>
 
@@ -83,8 +181,8 @@
 		display: flex;
 		flex-direction: column;
 		z-index: 3;
-		width: 245px;
-		height: 70vh;
+		min-width: 12vw;
+		height: 80vh;
 		padding: 10px;
 		overflow: hidden;
 		position: fixed;
@@ -95,6 +193,9 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+	}
+	#navMenu {
+		margin-bottom: 20px;
 	}
 	#navMenuItem {
 		font-size: 1rem;
@@ -131,32 +232,54 @@
 		border-radius: 20rem;
 		box-shadow: 0 0 12px #111;
 	}
-	nav > hr {
-		margin-top: 20px;
-		margin-bottom: 10px;
+	#playQueueContainer {
+		background: #171717c4;
+		width: 86%;
+		border-radius: 20px;
+		backdrop-filter: blur(10px);
+		overflow: hidden;
+		padding-right: 20px;
+		border: 1px solid #444;
+		filter: drop-shadow(0 0 20px #000);
+		background: #1717171e;
+		position: absolute;
+		bottom: 5px;
+		height: auto;
+	}
+	#playQueue {
+		padding-left: 10px;
+		width: 100%;
+		margin-bottom: 12px;
 	}
 	#playQueueTitle {
 		font-size: 17px;
 		margin-top: 20px;
 		margin-left: 10px;
-		display: none;
+	}
+	#playQueueTitle:hover {
+		cursor: pointer;
+	}
+	#playQueueTitle > img {
+		float: right;
+		margin-right: 6px;
+		width: 24px;
 	}
 
 	#emptyQueue {
-		display: flex;
+		display: none;
 		flex-direction: column;
 	}
 
 	#createQueueButton {
 		font-size: 17px;
-		margin: 17px 10px;
 		color: #999;
 	}
 
 	#clearQueueButton {
 		font-size: 15px;
-		margin: 15px 80px;
 		color: #999;
+		width: 100%;
+		display: none;
 	}
 
 	#queueContainer {
@@ -165,10 +288,21 @@
 
 	#queueItem {
 		display: flex;
-		background: #222;
 		align-items: center;
 		height: 50px;
-		border-radius: 20px;
+		border-radius: 14px;
+		margin-bottom: 8px;
+		transition: .2s;
+	}
+	.activeItem {
+		background: #222;
+	}
+	#queueItem:hover {
+		background: #222;
+		cursor: pointer;
+	}
+	#queueItem:hover > #playIconContainer > #playIcon {
+		opacity: 1;
 	}
 	#queueItemArtContainer {
 		display: flex;
@@ -180,62 +314,37 @@
 		border-radius: 150px;
 	}
 	#queueItemTitle {
-		font-size: 15px;
+		font-size: .8em;
 		margin-bottom: 2px;
 	}
 	#queueItemArtist {
-		font-size: 12px;
+		font-size: .7em;
 		color: #999;
 	}
 	#queueItemInfo {
 		display: flex;
 		flex-direction: column;
 		margin-left: 10px;
-		width: 154px;
+		width: 100%;
 	}
 
 	#nowPlayingIcon {
 		width: 20px;
-		animation-name: spinningDisc;
-		animation-duration: 0.8s;
-		animation-iteration-count: infinite;
+		padding-right: 12px;
 	}
 
-
-	/* @keyframes spinningDisc {
-  from {
-    transform: rotateZ(0deg);
-  }
-  50% {
-    transform: rotateZ(180deg);
-  }
-  to {
-    transform: rotateZ(360deg);
-  }
-} */
-	@keyframes spinningDisc {
-		from {
-			transform: scale(1);
-		}
-		50% {
-			transform: scale(1.14);
-		}
-		to {
-			transform: scale(1);
-		}
+	#playIcon {
+		width: 20px;
+		padding-right: 12px;
+		opacity: 0;
 	}
 
 	@media only screen and (max-width: 1400px) {
 		#sideNav {
-			width: 35px;
+			width: 100%;
 			display: flex;
 			align-items: center;
-		}
-		#barTitleText {
-			display: none;
-		}
-		#alpha {
-			display: none;
+			/* margin-right: 20px; */
 		}
 		.navMenuText {
 			display: none;
@@ -245,11 +354,6 @@
 		}
 		#createQueueButton {
 			display: none;
-		}
-		.navMenuItem {
-			margin-left: 10px;
-			padding-bottom: 5px;
-			margin-bottom: 10px;
 		}
 	}
 

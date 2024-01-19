@@ -46,6 +46,8 @@
 		setTimeout(() => {
 			if (songDetails.length !== 0) {
 				localStorage.setItem('mostRecentSong', JSON.stringify(songDetails.data[0]));
+				document.getElementById('songName').innerHTML = songDetails.data[0].name;
+				document.getElementById('songArtist').innerHTML = songDetails.data[0].primaryArtists;
 				playPause();
 			}
 		}, 1000);
@@ -175,10 +177,11 @@
 		z-index: 5;
 		/* background: #0a0a0a6b; */
 		background: #0a0a0ae0;
-		backdrop-filter: blur(12px);
-		box-shadow: 0 0 20px #000;
+		backdrop-filter: blur(12px) brightness(90%);
 		border-top-left-radius: 30px;
 		border-top-right-radius: 30px;
+		border: 1px solid #444;
+		background: #070707c4;
 	}
 
 	#musicComponent {

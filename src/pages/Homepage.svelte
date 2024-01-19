@@ -176,6 +176,7 @@
 		z-index: 3;
 		display: flex;
 		justify-content: center;
+		margin-left: 9.7vw;
 	}
 	#content {
 		margin-top: 12vh;
@@ -235,7 +236,7 @@
 		margin-top: 20px;
 		margin-right: 5px;
 		overflow: hidden;
-		border: 2px solid #444;
+		border: 1px solid #444;
 	}
 	#lastPlayedSectionTitle {
 		font-size: 18px;
@@ -252,7 +253,7 @@
 		margin-top: 39px;
 		border-top-right-radius: 400px;
 		border-bottom-right-radius: 400px;
-		border: 2px solid #444;
+		border: 1px solid #444;
 	}
 	#likedSongs {
 		height: 100%;
@@ -386,7 +387,6 @@
 		#homePage {
 			margin-top: 30px;
 			width: 86%;
-			margin-left: 14vw;
 		}
 		#homeCardContainer {
 			grid-template-columns: 250px 250px 250px 250px;

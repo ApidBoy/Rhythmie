@@ -103,7 +103,8 @@
 		font-weight: bold;
 	}
 	#searchBar {
-		margin-left: 3.2%;
+		margin-left: 3.2vw;
+		/* margin-left: 3.2%; */
 	}
 	#searchBox {
 		padding: 7px;
@@ -113,9 +114,9 @@
 		font-size: 17px;
 		outline: none;
 		border-radius: 15px;
-		border: 1px solid #444;
 		margin-top: 15px;
 		caret-color: #6f16ff;
+		border: 1px solid #444;
 		filter: drop-shadow(0 0 20px #000);
 		background: #1717171e;
 		/* background: #171717b0; */
