@@ -15,7 +15,7 @@
 
 	let activeRoute = '';
 	let currentSong = [];
-	let queueOpen = true;
+	let queueOpen = false;
 
 	activeRouteDerived.subscribe((value) => {
 		activeRoute = value;
@@ -181,9 +181,10 @@
 		display: flex;
 		flex-direction: column;
 		z-index: 3;
-		min-width: 12vw;
+		width: 240px;
+		padding-left: 10px;
+		padding-top: 10px;
 		height: 80vh;
-		padding: 10px;
 		overflow: hidden;
 		position: fixed;
 		top: 64px;
@@ -193,6 +194,7 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		/* background: #fff; */
 	}
 	#navMenu {
 		margin-bottom: 20px;
@@ -244,7 +246,7 @@
 		background: #1717171e;
 		position: absolute;
 		bottom: 5px;
-		height: auto;
+		height: 60px;
 	}
 	#playQueue {
 		padding-left: 10px;
@@ -263,6 +265,7 @@
 		float: right;
 		margin-right: 6px;
 		width: 24px;
+		transform: rotate(180deg);
 	}
 
 	#emptyQueue {

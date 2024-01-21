@@ -175,11 +175,11 @@
 		overflow-x: hidden;
 		z-index: 3;
 		display: flex;
-		justify-content: center;
-		margin-left: 9.7vw;
+		margin-left: 250px;
 	}
 	#content {
 		margin-top: 12vh;
+		margin-left: 2vw;
 	}
 	#greeting {
 		font-family: 'Josefin Sans', sans-serif;
@@ -322,9 +322,11 @@
 	}
 	#homeCardContainer {
 		display: grid;
-		gap: 20px;
-		grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
-		grid-template-rows: 250px 250px 250px;
+		gap: 2vw;
+		/* grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
+		grid-template-rows: 250px 250px 250px; */
+		grid-template-columns: auto auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto;
 	}
 	#likedSongs {
 		display: flex;
@@ -383,7 +385,7 @@
 	#exploreMoreHome:hover {
 		color: #8d3eff;
 	}
-	@media only screen and (max-width: 1740px) {
+	/* @media only screen and (max-width: 1740px) {
 		#homePage {
 			margin-top: 30px;
 			width: 86%;
@@ -465,5 +467,5 @@
 		#exploreMoreHomeContainer {
 			padding-bottom: 100px;
 		}
-	}
+	} */
 </style>

@@ -316,9 +316,9 @@
 		height: 10px;
 	}
 	#bottomIcons {
-		position: fixed;
+		position: absolute;
 		bottom: 35px;
-		right: 8.2%;
+		right: 144px;
 	}
 	#bottomIcons > img {
 		width: 25px;
@@ -330,7 +330,7 @@
 		border-radius: 20px;
 		position: fixed;
 		bottom: 44%;
-		right: 1.6%;
+		right: 20px;
 		overflow: hidden;
 		transition: 0.4s;
 	}
@@ -350,7 +350,7 @@
 	#volumeButton {
 		transition: 0.3s;
 		position: relative;
-		right: 22%;
+		right: 22px;
 	}
 	#volumeButton:hover {
 		cursor: pointer;
@@ -359,7 +359,7 @@
 	#bottomMenu {
 		transition: 0.3s;
 		position: relative;
-		right: 25%;
+		right: 25px;
 	}
 	#bottomMenu:hover {
 		cursor: pointer;
@@ -369,7 +369,7 @@
 		transition: 0.3s;
 		transform: scale(0.95);
 		position: relative;
-		right: 28%;
+		right: 28px;
 	}
 	#favButton:hover {
 		cursor: pointer;

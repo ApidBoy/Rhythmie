@@ -78,9 +78,12 @@
 		flex-wrap: nowrap;
 		flex-direction: row;
 		padding-top: 26px;
-		padding-bottom: 10px;
-		margin-bottom: 10px;
-		margin-left: 10px;
+		padding-bottom: 20px;
+		width: 240px;
+		padding-left: 10px;
+		/* padding-right: 26px; */
+		/* width: 12.9vw; */
+		/* background: #f00; */
 	}
 	#icon {
 		width: 2.2rem;
@@ -103,7 +106,7 @@
 		font-weight: bold;
 	}
 	#searchBar {
-		margin-left: 3.2vw;
+		margin-left: 2vw;
 		/* margin-left: 3.2%; */
 	}
 	#searchBox {
