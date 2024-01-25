@@ -489,6 +489,27 @@
 			grid-template-columns: repeat(2, 1fr);
 			grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .1fr;
 		}
+		#lastPlayedTitle, #likedSongsTitle {
+			font-size: 1em;
+		}
+		#lastPlayedArtist, #likedSongsNumber {
+			font-size: .9em;
+		}
+		#playButtonContainer {
+			position: relative;
+			right: 24px;
+		}
+		#playButton {
+			width: 24px;
+		}
+		#usernameField,
+		#usernameInput {
+			font-size: 1.4em;
+			-webkit-text-stroke: .5px #fff;
+		}
+		#greeting {
+			font-size: 1.6em;
+		}
 	}
 
 	@media only screen and (max-width: 550px) {

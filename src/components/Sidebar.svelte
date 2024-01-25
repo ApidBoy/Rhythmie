@@ -345,14 +345,14 @@
 			z-index: 5;
 			top: auto;
 			bottom: 0;
-			height: 53px;
+			height: 60px;
 			width: 100vw;
 			border: none;
 			/* padding-left: 10px;
 			padding-top: 10px; */
 			padding: 0;
 			/* background: #070707c4; */
-			backdrop-filter: blur(12px) brightness(70%);
+			backdrop-filter: blur(7px) brightness(70%);
 			/* box-shadow: 0 0 20px #000; */
 			/* filter: drop-shadow(10px); */
 		}
@@ -365,7 +365,7 @@
 			justify-content: center;
 			align-items: center;
 			width: 100%;
-			margin-top: 10px;
+			margin-top: 13px;
 		}
 		#navMenuItem {
 			align-items: center;
