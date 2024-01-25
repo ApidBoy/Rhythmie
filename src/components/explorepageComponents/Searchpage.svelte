@@ -26,6 +26,37 @@
 		playerDataVariable = value;
 	});
 
+	function debounce(func, delay) {
+		let timeoutId;
+		return function (...args) {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+				func.apply(this, args);
+			}, delay);
+		};
+	}
+
+	const debouncedSearch = debounce(() => {
+    	goto('/explore/topresults');
+		searchStore.set(searchText);
+		handleSearch();
+		if(searchText === '')
+    		goto('/explore');
+  	}, 1000);
+
+	const handleInput = (event) => {
+    	searchText = event.target.value;
+		debouncedSearch();
+	}
+
+	const handleSearch = async () => {
+		await fetch(`https://saavn.me/search/all?query=${searchText}`)
+		.then((response) => response.json())
+		.then((data) => {
+			searchResultStore.set(data.data);
+		});
+	}
+
 	console.log('Search results - ', searchResults);
 </script>
 
@@ -227,9 +258,214 @@
 			</div>
 		</section>
 	</section>
+
+
+
+
+
+
+
+
+
+	
+	<section id="mobileContents">
+
+
+		
+				
+		<div id="searchBar">
+			<input bind:value={searchText} on:input={handleInput} maxlength="46" placeholder="Search for a song, artist or album" id="searchBox" type="text" />
+			<span id="clearBox" class="material-symbols-outlined">close</span>
+		</div>
+
+
+		
+			<div id="categoryContainer">
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span on:click={() => goto('/explore')} id="searchBack" class="material-symbols-outlined"> arrow_back_ios </span>
+				<div id="activeCategory" class="searchCategory">
+					<button on:click={() => goto('/explore/topresults')}>Top Results</button>
+				</div>
+				<div class="searchCategory">
+					<button on:click={() => goto('/explore/songs')}>Songs</button>
+				</div>
+				<div class="searchCategory">
+					<button on:click={() => goto('/explore/albums')}>Albums</button>
+				</div>
+				<div class="searchCategory">
+					<button on:click={() => goto('/explore/artists')}>Artists</button>
+				</div>
+			</div>
+
+
+				<div class="categoryTitle">Top Result for "{searchText}"</div>
+				<section class="searchResultsContainer" id="topMostResult">
+                    <div id="topMostExtended">
+                        <div class="topMostResult">
+							<div id="songArtContainer">
+								<object
+									id="topMostResultMusicArt"
+									data={searchResults.topQuery.results[0].image[1].link}
+									type="image/png"
+									aria-label="Song Art"
+								>
+									<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
+								</object>
+								{#if playerDataVariable.length !== 0 && searchResults.topQuery.results[0].id === playerDataVariable.data[0].id}
+								<div id="nowPlayingContainer">
+									<img draggable={false} id="nowPlaying" src={now} alt="" />
+								</div>
+								{/if}
+							</div>
+                            <div id="topMostResultSongInfo">
+                                <div id="topMostActualInfo">
+                                    <div id="topMostResultSongTitle">
+                                        {searchResults.topQuery.results[0].title}
+                                    </div>
+                                    <div id="topMostResultSongArtist">
+                                        {#if searchResults.topQuery.results[0].type === "artist"}
+                                            {searchResults.topQuery.results[0].description}
+                                        {:else}
+                                            {searchResults.topQuery.results[0].primaryArtists}
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="topMostResultIcons" id="topMostResultIcons">
+                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                                    <img on:click={() => fetchSong(searchResults.topQuery.results[0].id)} draggable={false} id="topMostResultPlayButton" src={play} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="extendedIcons">
+                            <img draggable={false} id="topMostResultFavButton" class="searchedIcons" src={unfav} alt="" />
+                            <button on:click={() => location.href = `https://youtube.com/results?search_query=${searchResults.topQuery.results[0].title} by ${searchResults.topQuery.results[0].primaryArtists}`}>
+                                <img class="extendedButtonIcons" id="youtubeIcon" alt="YouTube logo" src={youtube} />
+                                Search YouTube
+                            </button>
+                            <button on:click={() => location.href = `https://genius.com/search?q=${searchResults.topQuery.results[0].primaryArtists}`}>
+                                <img class="extendedButtonIcons" alt="Artist logo" src={artist} />
+                                Go to artist
+                            </button>
+                            <button>
+                                <img class="extendedButtonIcons" alt="Queue logo" src={add}/>
+                                Add to queue
+                            </button>
+                            <img draggable={false} id="topMostResultOptionButton" class="searchedIcons" src={dots} alt="" />
+                        </div>
+                    </div>
+				</section>
+
+
+				<div class="categoryTitle">Songs</div>
+				<section class="searchResultsContainer" id="topMostResultSongs">
+					{#each searchResults.songs.results as element}
+						<div class="searchResults">
+							{#if element.image[0].link}
+								<div id="musicArtContainer">
+									<object
+										id="searchedMusicArt"
+										data={element.image[0].link}
+										type="image/png"
+										aria-label="Song Art"
+									>
+										<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt={''} />
+									</object>
+								</div>
+							{:else}
+								<img id="searchedMusicArt" src={defaultImg} alt={defaultImg} />
+							{/if}
+							<div id="searchedSongInfo">
+								<div id="actualInfo">
+									<div id="searchedSongTitle">{element.title}</div>
+									<div id="searchedSongArtist">{element.primaryArtists}</div>
+								</div>
+								<div class="topSearchIcons" id="searchedIcons">
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<img on:click={() => fetchSong(element.id)} draggable={false} id="searchedPlayButton" src={play} alt="" />
+									<img
+										draggable={false}
+										id="searchedOptionButton"
+										class="searchedIcons"
+										src={dots}
+										alt=""
+									/>
+								</div>
+							</div>
+						</div>
+					{/each}
+				</section>
+
+
+				<div id="albumsCategory" class="categoryTitle">Albums</div>
+				<section class="searchResultsContainer" id="topResultsAlbums">
+					{#each searchResults.albums.results as element}
+						<div class="searchAlbumResults">
+							{#if element.image[1].link}
+								<div id="albumArtContainer">
+									<object
+										id="searchedAlbumArt"
+										data={element.image[1].link}
+										type="image/png"
+										aria-label="Album Art"
+									>
+										<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
+									</object>
+									<img draggable={false} id="searchedAlbumPlayButton" src={play} alt="" />
+								</div>
+							{:else}
+								<img alt="Album art" src={defaultImg} class="searchAlbumResults" />
+							{/if}
+                                <div id="searchedAlbumInfo">
+                                    <div id="searchedAlbumTitle">{limitString(element.title, 18)}</div>
+                                    <div id="searchedAlbumArtist">{limitString(element.artist, 14)}</div>
+                                </div>
+						</div>
+					{/each}
+                    <div id="moreButton">
+                        <a href="/explore/albums"><img alt="More" src={moreWhite} /></a>
+                    </div>
+				</section>
+
+				<div id="artistsCategory" class="categoryTitle">Artists</div>
+				<section class="searchResultsContainer" id="artistsContainer">
+					{#each searchResults.artists.results as element}
+						<div class="searchAlbumResults">
+							{#if element.image[1].link}
+								<div id="artistArtContainer">
+									<object
+										id="searchedArtistArt"
+										data={element.image[1].link}
+										type="image/png"
+										aria-label="Album Art"
+									>
+										<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
+									</object>
+									<img draggable={false} id="searchedAlbumPlayButton" src={play} alt="" />
+								</div>
+							{:else}
+								<img alt="Album art" src={defaultImg} class="searchAlbumResults" />
+							{/if}
+                                <div id="searchedAlbumInfo">
+                                    <div id="searchedAlbumTitle">{limitString(element.title, 18)}</div>
+                                    <div id="searchedAlbumArtist">{limitString(element.description, 14)}</div>
+                                </div>
+						</div>
+					{/each}
+                    <div id="moreButton">
+                        <a href="/explore/albums"><img alt="More" src={moreWhite} /></a>
+                    </div>
+				</section>
+	</section>
 </div>
 
 <style>
+	#mobileContents {
+		display: none;
+	}
 	#contentsContainer {
 		overflow: scroll;
 		overflow-x: hidden;
@@ -245,8 +481,8 @@
 		display: flex;
 	}
 	#row {
-		width: 40%;
-		margin-left: 5vw;
+		width: 39%;
+		margin-left: 7vw;
 	}
 
 	#categoryContainer {
@@ -281,12 +517,18 @@
 		width: 100%;
 		height: 13.2vh;
 		overflow: hidden;
-        box-shadow: 0 0 30px #000;
+		border: 1px solid #444;
+		filter: drop-shadow(0 0 20px #000);
 	}
 
     #topMostResult {
 		border-top-left-radius: 4em;
 		border-top-right-radius: 4em;
+		border-bottom-left-radius: 2em;
+		border-bottom-right-radius: 2em;
+		padding-bottom: 5px;
+		padding-left: 4px;
+		padding-right: 4px;
         overflow: hidden;
 		margin-top: 5vh;
     }
@@ -297,6 +539,7 @@
         background: #1c1c1c;
 		border-bottom-left-radius: 2em;
 		border-bottom-right-radius: 2em;
+		filter: drop-shadow(0 0 20px #000);
     }
     #extendedIcons {
         display: flex;
@@ -305,16 +548,16 @@
     }
     #extendedIcons > button {
 		/* font-family: 'Josefin Sans', sans-serif; */
-        margin: 18px 10px;
+        margin: .8vw .6vw;
 		color: #ccc;
         background: #242424;
-        padding: 10px 14px;
+        padding: .6vw .8vw;
         border-radius: .7em;
         display: flex;
         align-items: center;
         justify-content: center;
         border: none;
-        font-size: 1rem;
+        font-size: 1em;
     }
 
     .extendedButtonIcons {
@@ -333,9 +576,12 @@
 
     #topMostResultIcons {
         animation: topMostResultIcons 6s;
-        width: 150px;
-        margin-left: -12%;
-        margin-top: 1%;
+		/* background: #fff; */
+        width: 100%;
+		margin-right: 40px;
+		display: flex;
+		justify-content: flex-end;
+		/* align-items: center; */
     }
 
     @keyframes topMostResultIcons {
@@ -349,17 +595,15 @@
 
     #topMostResultPlayButton {
         width: 25px;
-        margin-top: .3vh;
-        margin-left: 3.2vw;
     }
 
     #topMostResultFavButton {
         width: 22px;
-        margin-right: 1.2vw;
+        margin-right: .4vw;
     }
     #topMostResultOptionButton {
         width: 22px;
-        margin-left: 1.2vw;
+        margin-left: .4vw;
     }
 
 
@@ -374,21 +618,35 @@
 	#topMostResultSongInfo {
 		margin-left: 1.4em;
 		display: flex;
+		align-items: center;
+		/* background: #f00; */
+		height: 100%;
+		width: 100%;
 	}
+
+	#topMostActualInfo {
+		width: 100%;
+	}
+
 	#topMostResultSongTitle {
 		max-height: 1em;
 		margin-bottom: 0.4em;
-		min-width: 20em;
+		min-width: 10vw;
+		width: 100%;
 		border-radius: 20em;
 		font-size: 24px;
 		font-family: 'Josefin Sans', sans-serif;
+		/* background: #0f0; */
 	}
 	#topMostResultSongArtist {
 		max-height: 0.7em;
-		min-width: 12em;
+		/* min-width: 8vw; */
+		width: 100%;
+		/* background: #0f0; */
 		border-radius: 20em;
 		font-family: 'Josefin Sans', sans-serif;
 		color: #8f49ff;
+		/* background: #0f0; */
 		font-size: 17px;
 	}
 
@@ -397,6 +655,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		width: 100%;
 	}
 	.searchResults {
 		height: 5.9vh;
@@ -406,8 +665,9 @@
 		padding: 0.7em 0.7em;
 		margin-bottom: 0.4em;
 		transition: 0.4s;
-		border-bottom: 1px solid #151515;
+		/* border-bottom: 1px solid #383838; */
 		border-radius: 14px;
+		border: 1px solid transparent;
 	}
 
 	.topSearchIcons {
@@ -416,9 +676,12 @@
 
 	#searchedIcons {
 		display: flex;
+		justify-content: flex-end;
 		align-items: center;
 		height: 100px;
-		width: 100px;
+		width: 0;
+		/* background: #0f0; */
+		margin-right: 30px;
 	}
 
 	#searchedFavButton {
@@ -459,10 +722,13 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		width: 23.5vw;
+		align-items: flex-start;
+		width: 100%;
+		/* background: #00f; */
 	}
 
 	#searchedSongInfo {
+		width: 100%;
 		display: flex;
 		margin-left: 15px;
 		font-size: 12px;
@@ -470,14 +736,14 @@
 
 	#searchedSongTitle {
 		height: 14px;
-		min-width: 200px;
+		width: 100%;
 		margin-bottom: 10px;
 		font-size: 17px;
 	}
 
 	#searchedSongArtist {
 		height: 10px;
-		min-width: 100px;
+		width: 100%;
 		opacity: 0.5;
 		font-size: 14px;
 	}
@@ -606,6 +872,34 @@
 		color: #777;
 	}
 
+	
+	#searchBar {
+		display: none;
+	}
+	#searchBox {
+		padding: 7px;
+		padding-left: 15px;
+		height: 30px;
+		width: 90%;
+		font-size: 17px;
+		outline: none;
+		border-radius: 15px;
+		margin-top: 15px;
+		margin-bottom: 20px;
+		caret-color: #6f16ff;
+		border: 1px solid #444;
+		filter: drop-shadow(0 0 20px #000);
+		background: #1717171e;
+		/* background: #171717b0; */
+		backdrop-filter: blur(14px);
+	}
+	#searchBox:focus {
+		box-shadow: 0 0 15px #000;
+	}
+	#clearBox {
+		display: none;
+	}
+
 	@media (hover: hover) {
 		.searchCategory:hover, .searchCategory > button:hover {
 			cursor: pointer;
@@ -638,8 +932,9 @@
 		}
 
 		.searchResults:hover {
-			background: #181818;
-			box-shadow: 0 0 20px #111;
+			border: 1px solid #444;
+			filter: drop-shadow(0 0 20px #000);
+			background: #1717171e;
 		}
 
 		.searchedIcons:hover {
@@ -663,5 +958,233 @@
 			cursor: pointer;
 			margin-left: 5px;
 		}
+	}
+
+	@media only screen and (max-width: 1760px) {
+
+		#topMostExtended {
+			height: 20.5vh;
+			width: 100%;
+			border-bottom-left-radius: 2em;
+			border-bottom-right-radius: 2em;
+		}
+		#extendedIcons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#extendedIcons > button {
+			margin: 1vw 1vw;
+			color: #ccc;
+			background: #242424;
+        	padding: .4vw .6vw;
+			border-radius: .7em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			font-size: .8rem;
+		}
+
+		.extendedButtonIcons {
+			width: 13px;
+			margin-right: 8px;
+		}
+
+		#topMostResultPlayButton {
+			width: 22px;
+		}
+
+		#topMostResultFavButton {
+			width: 18px;
+			margin-right: 1%;
+		}
+		#topMostResultOptionButton {
+			width: 18px;
+			margin-left: 1%;
+		}
+
+	}
+
+	@media only screen and (max-width: 1760px) {
+		#extendedIcons > button {
+			margin: 1vw .6vw;
+			color: #ccc;
+			background: #242424;
+        	padding: .4vw .6vw;
+			border-radius: .7em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			font-size: .8rem;
+		}
+	}
+
+	@media only screen and (max-width: 1380px) {
+		#contents {
+			flex-direction: column;
+		}
+		#row {
+			width: 84%;
+		}
+	}
+
+	@media only screen and (max-width: 970px) {
+		#contents {
+			display: none;
+		}
+		#mobileContents {
+			display: block;
+			margin-top: 70px;
+			margin-bottom: 70px;
+		}
+		#contentsContainer {
+			margin-left: -30px;
+		}
+		#searchBar {
+			display: block;
+		}
+		#categoryContainer {
+			margin-bottom: 30px;
+		}
+		.searchCategory {
+			font-size: .9rem;
+			margin: 0 6px;
+			padding: 8px 10px;
+		}
+		.searchCategory > button {
+			font-size: .9rem;
+		}
+		#activeCategory {
+			border-radius: 8px;
+		}
+
+		.topMostResult {
+			background: #171717;
+			border-radius: 20em;
+			display: flex;
+			align-items: center;
+			width: 100%;
+			height: 13.2vh;
+			overflow: hidden;
+			border: 1px solid #444;
+			filter: none;
+		}
+
+		#topMostResult {
+			width: 93%;
+			margin-top: 24px;
+		}
+
+		#topMostExtended {
+			height: 21vh;
+			width: 100%;
+			background: transparent;
+			border: none;
+			filter: none;
+		}
+
+		.categoryTitle {
+			font-size: 1.3rem;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+
+		#extendedIcons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#extendedIcons > button {
+			/* font-family: 'Josefin Sans', sans-serif; */
+			margin: 2vw .6vw;
+			color: #ccc;
+			background: #242424;
+			padding: .8vw 1vw;
+			border-radius: .5em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			font-size: .8em;
+		}
+
+		.extendedButtonIcons {
+			width: 14px;
+			margin-right: 8px;
+		}
+
+		#extendedIcons > button:hover {
+			cursor: pointer;
+			opacity: .5;
+		}
+		
+		#topMostResultFavButton {
+			width: 18px;
+			margin-right: 2vw;
+		}
+
+		#topMostResultOptionButton {
+			width: 18px;
+			margin-left: 2vw;
+		}
+
+
+
+		
+
+		.searchResultsContainer {
+			width: 94%;
+		}
+		.searchResults {
+			width: 96%;
+			/* background: #0f0; */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/* margin-left: -10px; */
+		}
+
+		#searchedMusicArt {
+			margin-left: 0em;
+		}
+
+		#searchedPlayButton {
+			width: 18px;
+			margin-right: 10px;
+			opacity: 1;
+		}
+		#topMostResultSongs {
+			width: 100%;
+		}
+
+
+		
+
+		#topResultsAlbums, #artistsContainer {
+			margin-left: 0;
+			width: 100%;
+			overflow-x: scroll;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			gap: 4vw;
+			margin: 40px 0;
+			margin-bottom: 78px;
+		}
+		#topResultsAlbums::-webkit-scrollbar, #artistsContainer::-webkit-scrollbar {
+			display: none;
+		}
+
+
+		.searchAlbumResults {
+			height: 229px;
+			width: 180px;
+			background: #171717;
+			border-radius: 20px;
+		}
+
 	}
 </style>
