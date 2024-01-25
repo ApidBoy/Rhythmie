@@ -7,8 +7,14 @@
     import './styles.css';
 	import { activeRouteDerived, setActiveRoute } from '../activeRoute';
 	import { onMount } from 'svelte';
+	import { playerData } from '../store';
 
 	let activeRoute = '';
+	let songDetails;
+	playerData.subscribe((value) => {
+		console.log('Player data: ', value);
+		songDetails = value;
+    });
 
     onMount(() => {
         activeRouteDerived.subscribe((value) => {
@@ -29,7 +35,9 @@
     <Sidebar />
 {/if}
 
-<Player />
+{#if songDetails.length !== 0}
+    <Player />
+{/if}
 
 <main>
     <slot />

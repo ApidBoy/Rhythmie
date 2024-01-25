@@ -180,7 +180,7 @@
 	#sideNav {
 		display: flex;
 		flex-direction: column;
-		z-index: 3;
+		z-index: 5;
 		width: 240px;
 		padding-left: 10px;
 		padding-top: 10px;
@@ -212,11 +212,6 @@
 	}
 	#homeIcon {
 		width: 1.5rem;
-	}
-	#navMenuItem:hover {
-		background: #a5a5a52a;
-		cursor: pointer;
-		border-radius: 20rem;
 	}
 	.navMenuText {
 		margin-left: 10px;
@@ -252,9 +247,6 @@
 		font-size: 17px;
 		margin-top: 20px;
 		margin-left: 10px;
-	}
-	#playQueueTitle:hover {
-		cursor: pointer;
 	}
 	#playQueueTitle > img {
 		float: right;
@@ -295,13 +287,6 @@
 	.activeItem {
 		background: #222;
 	}
-	#queueItem:hover {
-		background: #222;
-		cursor: pointer;
-	}
-	#queueItem:hover > #playIconContainer > #playIcon {
-		opacity: 1;
-	}
 	#queueItemArtContainer {
 		display: flex;
 		margin-left: 10px;
@@ -337,18 +322,39 @@
 		opacity: 0;
 	}
 
+	@media (hover: hover) {
+		#navMenuItem:hover {
+			background: #a5a5a52a;
+			cursor: pointer;
+			border-radius: 20rem;
+		}
+		#playQueueTitle:hover {
+			cursor: pointer;
+		}
+		#queueItem:hover {
+			background: #222;
+			cursor: pointer;
+		}
+		#queueItem:hover > #playIconContainer > #playIcon {
+			opacity: 1;
+		}
+	}
+
 	@media only screen and (max-width: 970px) {
 		#sideNav {
 			z-index: 5;
 			top: auto;
 			bottom: 0;
-			height: 9%;
-			width: 97.5vw;
-			border: 1px solid #444;
-			background: #070707c4;
-			backdrop-filter: blur(12px) brightness(90%);
-			border-top-left-radius: 30px;
-			border-top-right-radius: 30px;
+			height: 53px;
+			width: 100vw;
+			border: none;
+			/* padding-left: 10px;
+			padding-top: 10px; */
+			padding: 0;
+			/* background: #070707c4; */
+			backdrop-filter: blur(12px) brightness(70%);
+			/* box-shadow: 0 0 20px #000; */
+			/* filter: drop-shadow(10px); */
 		}
 		#playQueueContainer {
 			display: none;
@@ -356,16 +362,37 @@
 		#navMenu {
 			display: flex;
 			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
 		}
 		#navMenuItem {
 			align-items: center;
 			padding-left: 0;
+			width: 25%;
+			height: 60px;
+			padding: 3px;
+			padding-top: 7px;
+			margin: 0;
+			border-radius: 14px;
+		}
+		.active {
+			border-radius: 14px;
+		}
+		.navMenuIcon {
+			width: 1.2rem;
+			margin-right: 0;
+		}
+		#homeIcon {
+			width: 1.3rem;
 		}
 	}
 	@media only screen and (max-width: 500px) {
 		.navMenuText {
 			display: none;
-			margin-left: 7px;
+			margin-left: 4px;
+			margin-top: 8px;
 		}
 		.active > div > .navMenuText {
 			display: inline-block;

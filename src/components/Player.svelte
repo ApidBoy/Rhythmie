@@ -104,7 +104,6 @@
 	}
 </script>
 
-{#if songDetails.length !== 0}
 	<div id="bottomBar">
 		<audio bind:this={audio} src={songDetails.data[0].downloadUrl[2].link}></audio>
 		<div id="musicInfo">
@@ -161,9 +160,6 @@
 			</div>
 		</div>
 	</div>
-{:else}
-	<PlayerSkeleton />
-{/if}
 
 <style>
 	#bottomBar {
@@ -174,7 +170,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-		z-index: 5;
+		z-index: 3;
 		/* background: #0a0a0a6b; */
 		background: #0a0a0ae0;
 		backdrop-filter: blur(12px) brightness(90%);
@@ -377,7 +373,7 @@
 	}
 	@media only screen and (max-width: 970px) {
 		#bottomBar {
-			bottom: 11%;
+			bottom: 60px;
 			left: 5%;
 			border-radius: 20px;
 			height: 85px;
