@@ -202,5 +202,12 @@
 			margin-left: 0;
 			display: none;
 		}
+		#topBar {
+			background: #1717171e;
+			backdrop-filter: blur(14px);
+			border-bottom-left-radius: 20px;
+			border-bottom-right-radius: 20px;
+			overflow: hidden;
+		}
 	}
 </style>

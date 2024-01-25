@@ -481,6 +481,21 @@
 			height: 
 		} */
 	}
+	@media only screen and (max-width: 580px) {
+		#homeCardContainer {
+			margin-left: 2vw;
+			gap: 4vw;
+			justify-content: center;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .1fr;
+		}
+	}
+
+	@media only screen and (max-width: 550px) {
+		#homePage {
+			margin-left: 4vw;
+		}
+	}
 
 	/* @media only screen and (max-width: 1740px) {
 		#homePage {

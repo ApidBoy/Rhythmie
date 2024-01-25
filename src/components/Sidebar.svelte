@@ -348,7 +348,7 @@
 			top: auto;
 			bottom: 0;
 			height: 9%;
-			width: 100vw;
+			width: 97.5vw;
 			border: 1px solid #444;
 			background: #070707c4;
 			backdrop-filter: blur(12px) brightness(90%);
@@ -365,6 +365,11 @@
 		#navMenuItem {
 			align-items: center;
 			padding-left: 0;
+		}
+	}
+	@media only screen and (max-width: 500px) {
+		.navMenuText {
+			display: none;
 		}
 	}
 </style>
