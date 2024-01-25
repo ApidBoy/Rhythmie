@@ -439,8 +439,18 @@
 			flex-direction: column;
 			width: 91%;
 		}
-		#lastPlayedContainer, #likedSongsContainer {
-			border-radius: 400em;
+		#lastPlayedContainer {
+			border-top-left-radius: 32px;
+			border-top-right-radius: 32px;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+		#likedSongsContainer {
+			margin-top: 10px;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			border-bottom-left-radius: 32px;
+			border-bottom-right-radius: 32px;
 		}
 		#lastPlayed, #likedSongs {
 			justify-content: flex-start;
@@ -477,9 +487,15 @@
 			width: 40px;
 			padding: 12px;
 		}
-		/* #lastPlayedContainer {
-			height: 
-		} */
+		#lastPlayedContainer {
+			margin-bottom: -8px;
+		}
+		#homePageTitleContainer {
+			font-size: 1.2em;
+		}
+		#fireEmoji {
+			height: 20px;
+		}
 	}
 	@media only screen and (max-width: 580px) {
 		#homeCardContainer {
@@ -517,88 +533,4 @@
 			margin-left: 4vw;
 		}
 	}
-
-	/* @media only screen and (max-width: 1740px) {
-		#homePage {
-			margin-top: 30px;
-			width: 86%;
-		}
-		#homeCardContainer {
-			grid-template-columns: 250px 250px 250px 250px;
-			grid-template-rows: 280px 280px 280px 280px 280px;
-		}
-	}
-	@media only screen and (max-width: 1500px) {
-		#homeCardContainer {
-			grid-template-columns: 250px 250px 250px;
-			grid-template-rows: 280px 280px 280px 280px 280px 280px 280px;
-		}
-	}
-	@media only screen and (max-width: 1400px) {
-		#homePage {
-			width: 92%;
-			margin-left: 110px;
-		}
-		#homeCardContainer {
-			grid-template-columns: 250px 250px 250px 250px;
-			grid-template-rows: 280px 280px 280px 280px 280px;
-		}
-	}
-	@media only screen and (max-width: 1170px) {
-		#homePage {
-			width: 92%;
-			margin-left: 110px;
-		}
-		#homeCardContainer {
-			grid-template-columns: 250px 250px 250px;
-			grid-template-rows: 280px 280px 280px 280px 280px;
-		}
-	}
-	@media only screen and (max-width: 880px) {
-		#greeting {
-			text-align: center;
-			font-weight: bold;
-		}
-		#homePage {
-			width: 92%;
-			margin-left: 70px;
-		}
-		#homeCardContainer {
-			grid-template-columns: 200px 200px 200px;
-			grid-template-rows: 200px 200px 200px 200px 200px;
-		}
-	}
-
-	@media only screen and (max-width: 750px) {
-		#homePage {
-			margin-left: 0;
-			width: 100%;
-		}
-		#exploreMoreHome {
-			margin-bottom: 35px;
-		}
-		#homePageTitle {
-			font-size: 16px;
-			width: 140px;
-		}
-		#homeCardContainer {
-			grid-template-columns: 170px 170px 170px;
-			grid-template-rows: 200px 200px 200px 200px 200px;
-			margin-left: 20px;
-		}
-	}
-
-	@media only screen and (max-width: 550px) {
-		#greeting {
-			font-size: 30px;
-		}
-		#homeCardContainer {
-			grid-template-columns: 100px 100px 100px;
-			grid-template-rows: 125px 125px 125px 125px 125px;
-			margin-left: 30px;
-		}
-		#exploreMoreHomeContainer {
-			padding-bottom: 100px;
-		}
-	} */
 </style>
