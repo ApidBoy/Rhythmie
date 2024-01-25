@@ -370,10 +370,10 @@
 		#navMenuItem {
 			align-items: center;
 			padding-left: 0;
-			width: 25%;
+			width: 30%;
 			height: 60px;
 			padding: 3px;
-			padding-top: 7px;
+			padding-top: 10px;
 			margin: 0;
 			border-radius: 14px;
 		}
