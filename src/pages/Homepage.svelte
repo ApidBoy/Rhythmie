@@ -469,6 +469,9 @@
 	}
 
 	@media only screen and (max-width: 970px) {
+		#content {
+			margin-top: 8vh;
+		}
 		#homePage {
 			margin-left: 9vw;
 			/* width: 100vw; */
