@@ -189,11 +189,6 @@
 		position: fixed;
 		top: 64px;
 		left: 0;
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
 		/* background: #fff; */
 	}
 	#navMenu {
@@ -344,7 +339,7 @@
 
 	@media only screen and (max-width: 970px) {
 		#sideNav {
-			position: fixed;
+			z-index: 5;
 			top: auto;
 			bottom: 0;
 			height: 9%;
@@ -370,6 +365,10 @@
 	@media only screen and (max-width: 500px) {
 		.navMenuText {
 			display: none;
+			margin-left: 7px;
+		}
+		.active > div > .navMenuText {
+			display: inline-block;
 		}
 	}
 </style>

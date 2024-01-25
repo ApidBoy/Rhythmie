@@ -375,4 +375,76 @@
 		cursor: pointer;
 		transform: scale(1.05);
 	}
+	@media only screen and (max-width: 970px) {
+		#bottomBar {
+			bottom: 11%;
+			left: 5%;
+			border-radius: 20px;
+			height: 85px;
+			width: 90%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			overflow: hidden;
+		}
+		#totalSeek {
+			width: 102%;
+			bottom: 0;
+			background: transparent;
+		}
+		#seekBar {
+			background: transparent;
+		}
+		#currentDuration, #totalDuration {
+			display: none;
+		}
+		#bottomIcons {
+			display: none;
+		}
+		#musicControls {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+		#shuffleButton, #repeatButton, #prevButton {
+			display: none;
+		}
+		#musicComponent > img {
+			width: 22px;
+			margin-right: 1px;
+		}
+		#musicComponent {
+			margin-right: 20px;
+		}
+		#songArtContainer {
+			left: 14px;
+		}
+		#songArt {
+			height: 55px;
+			width: 55px;
+		}
+		#musicInfo {
+			bottom: 22px;
+		}
+		#songInfo {
+			left: 86px;
+		}
+	}
+	@media only screen and (max-width: 600px) {
+		#musicInfo {
+			font-size: 1em;
+		}
+		#songArtist {
+			font-size: .9em;
+		}
+		#musicInfo {
+			bottom: 25px;
+		}
+		#seekBar {
+			height: 3px;
+		}
+	}
 </style>
