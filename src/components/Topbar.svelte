@@ -129,6 +129,7 @@
 		box-shadow: 0 0 15px #000;
 	}
 	#userAccountPanel {
+		/* display: none; */
 		position: absolute;
 		top: 20px;
 		right: 30px;
@@ -177,5 +178,29 @@
 	#barIcon {
 		width: 40px;
 		display: none;
+	}
+	@media only screen and (max-width: 970px) {
+		#searchBox {
+			width: 50vw;
+		}
+	}
+	@media only screen and (max-width: 740px) {
+		#searchBox {
+			width: 40vw;
+		}
+	}
+	@media only screen and (max-width: 630px) {
+		#searchBar {
+			margin-left: 0;
+		}
+		#searchBox {
+			width: 30vw;
+		}
+	}
+	@media only screen and (max-width: 580px) {
+		#searchBar {
+			margin-left: 0;
+			display: none;
+		}
 	}
 </style>

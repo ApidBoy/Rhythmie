@@ -24,7 +24,6 @@
 <style>
 	section {
         min-height: 100vh;
-        overflow-x: hidden;
         background: #050505;
         color:#fff;
         z-index: 0;
@@ -36,5 +35,6 @@
         position: absolute;
         top: 35px;
         left: 770px;
+        display: none;
 	}
 </style>

@@ -1,62 +1,62 @@
 <script>
-    // @ts-nocheck
-    import HomepageCards from '../components/homepageComponents/HomepageCards.svelte';
-    import edit from '$lib/res/pencil.png';
-    import play from '$lib/res/play-button.png';
-    import heart from '$lib/res/heart.png';
-    import defaultImg from '$lib/res/default.png';
-    import { onMount } from 'svelte';
-    import { resultsStore } from '../store.js';
+	// @ts-nocheck
+	import HomepageCards from '../components/homepageComponents/HomepageCards.svelte';
+	import edit from '$lib/res/pencil.png';
+	import play from '$lib/res/play-button.png';
+	import heart from '$lib/res/heart.png';
+	import defaultImg from '$lib/res/default.png';
+	import { onMount } from 'svelte';
+	import { resultsStore } from '../store.js';
 	import HomepageCardsSkeleton from '../components/skeletons/homepage/HomepageCardsSkeleton.svelte';
 
-    let greeting = 'Hey There!';
-    let results = undefined;
+	let greeting = 'Hey There!';
+	let results = undefined;
 	let mostRecentSong = [];
-    
-    resultsStore.set(results);
-    let index = 0;
 
-    const initGreeting = () => {
-        const date = new Date();
-        if (date.getHours() >= 6 && date.getHours() <= 12) {
-            greeting = 'Good morning!';
-        } else if (date.getHours() >= 12 && date.getHours() <= 16) {
-            greeting = 'Good afternoon!';
-        } else if (date.getHours() >= 16 && date.getHours() <= 20) {
-            greeting = 'Good evening!';
-        } else if (date.getHours() >= 20 && date.getHours() <= 24) {
-            greeting = 'Sweet dreams!';
-        } else if (date.getHours() >= 0 && date.getHours() <= 6) {
-            greeting = 'Sweet dreams!';
-        }
-    };
+	resultsStore.set(results);
+	let index = 0;
 
-    const fetchHomepageData = async () => {
-        try {
-            let url = "https://saavn.me/modules?language=hindi,english";
-            let homeData = await fetch(url);
-            let parsedData = await homeData.json();
-            resultsStore.set(parsedData);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+	const initGreeting = () => {
+		const date = new Date();
+		if (date.getHours() >= 6 && date.getHours() <= 12) {
+			greeting = 'Good morning!';
+		} else if (date.getHours() >= 12 && date.getHours() <= 16) {
+			greeting = 'Good afternoon!';
+		} else if (date.getHours() >= 16 && date.getHours() <= 20) {
+			greeting = 'Good evening!';
+		} else if (date.getHours() >= 20 && date.getHours() <= 24) {
+			greeting = 'Sweet dreams!';
+		} else if (date.getHours() >= 0 && date.getHours() <= 6) {
+			greeting = 'Sweet dreams!';
+		}
+	};
 
-    onMount(() => {
-        initGreeting();
-        fetchHomepageData();
-        resultsStore.subscribe(value => {
-            results = value;
-        });
+	const fetchHomepageData = async () => {
+		try {
+			let url = 'https://saavn.me/modules?language=hindi,english';
+			let homeData = await fetch(url);
+			let parsedData = await homeData.json();
+			resultsStore.set(parsedData);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
+	onMount(() => {
+		initGreeting();
+		fetchHomepageData();
+		resultsStore.subscribe((value) => {
+			results = value;
+		});
 		if (localStorage.getItem('mostRecentSong')) {
 			mostRecentSong = JSON.parse(localStorage.getItem('mostRecentSong'));
-			document.getElementById("lastPlayedPillContainer").style.background=`url(${mostRecentSong.image[2].link})`;
-			document.getElementById("lastPlayedPillContainer").style.backgroundRepeat="no-repeat";
-			document.getElementById("lastPlayedPillContainer").style.backgroundSize="cover";
-			document.getElementById("lastPlayedPillContainer").style.backgroundPosition="center";
+			document.getElementById('lastPlayedContainer').style.background =
+				`url(${mostRecentSong.image[2].link})`;
+			document.getElementById('lastPlayedContainer').style.backgroundRepeat = 'no-repeat';
+			document.getElementById('lastPlayedContainer').style.backgroundSize = 'cover';
+			document.getElementById('lastPlayedContainer').style.backgroundPosition = 'center';
 		}
-    });
-
+	});
 </script>
 
 <section id="homePage">
@@ -103,40 +103,54 @@
 				<img alt="Edit" id="editUsername" src={edit} />
 			</div>
 		</div>
+		<div id="lastPlayedSectionTitle">Pick up where you left off</div>
 		<div id="secondaryHomeSection">
 			<div id="lastPlayedContainer">
-				<div id="lastPlayedSectionTitle">Pick up where you left off</div>
-				<div id="lastPlayedPillContainer">
-					<div id="lastPlayed">
-						<div id="lastPlayedArt">
-							{#if mostRecentSong.length !== 0}
+				<div id="lastPlayed">
+					<div id="lastPlayedArt">
+						{#if mostRecentSong.length !== 0}
 							<img alt="Music art" src={mostRecentSong.image[1].link} />
-							{:else}
+						{:else}
 							<img alt="Music art" src={defaultImg} />
+						{/if}
+					</div>
+					<div id="lastPlayedDetails">
+						<div id="lastPlayedTitle">
+							{#if mostRecentSong.length !== 0}
+								{mostRecentSong.name}
+							{:else}
+								Play something awesome!
 							{/if}
 						</div>
-						<div id="lastPlayedDetails">
-							<div id="lastPlayedTitle">
-								{#if mostRecentSong.length !== 0}
-								{mostRecentSong.name}
-								{:else}
-								Play something awesome!
-								{/if}
-							</div>
-							<div id="lastPlayedArtist">
-								{#if mostRecentSong.length !== 0}
+						<div id="lastPlayedArtist">
+							{#if mostRecentSong.length !== 0}
 								{mostRecentSong.primaryArtists}
-								{:else}
+							{:else}
 								Your last played song will stay here.
-								{/if}</div>
+							{/if}
 						</div>
-						<div id="playButtonEffectContainer">
-							<img alt="Play" id="playButtonEffect" src={play} />
-						</div>
+					</div>
+					<div id="playButtonContainer">
+						<img alt="Play" id="playButton" src={play} />
 					</div>
 				</div>
 			</div>
-			<div id="likedSongsButtonContainer">
+			<div id="likedSongsContainer">
+				<div id="likedSongs">
+					<div id="likedSongsArt">
+						<img alt="Favorite" id="heartIcon" src={heart} />
+					</div>
+					<div id="likedSongsDetails">
+						<div id="likedSongsTitle">Your liked songs</div>
+						<div id="likedSongsNumber">0 Songs</div>
+					</div>
+					<div id="playButtonContainer">
+						<img alt="Play" id="playButton" src={play} />
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div id="likedSongsButtonContainer">
 				<div id="likedSongs">
 					<div id="likedSongsHeart">
 						<img alt="Favorite" id="heartIcon" src={heart} />
@@ -149,8 +163,7 @@
 						<img alt="Play" id="playButtonEffect" src={play} />
 					</div>
 				</div>
-			</div>
-		</div>
+			</div> -->
 		<div id="homePageTitleContainer">
 			<div id="homePageTitle">
 				Trending now <img
@@ -160,9 +173,9 @@
 				/>
 			</div>
 		</div>
-        <div id="homeCardContainer">
-                <HomepageCards />
-        </div>
+		<div id="homeCardContainer">
+			<HomepageCards />
+		</div>
 		<div id="homeSeparatorContainer">
 			<div id="homeSeparator"></div>
 		</div>
@@ -174,7 +187,6 @@
 		overflow: scroll;
 		overflow-x: hidden;
 		z-index: 3;
-		display: flex;
 		margin-left: 250px;
 	}
 	#content {
@@ -220,17 +232,14 @@
 		cursor: pointer;
 		transform: scale(1.1);
 	}
-	#lastPlayed {
+	#lastPlayedSectionTitle {
+		font-size: 18px;
+		margin-left: 5px;
+		font-family: 'Josefin Sans', sans-serif;
+	}
+	#lastPlayedContainer, #likedSongsContainer {
 		height: 100%;
 		width: 100%;
-		backdrop-filter: blur(7px) contrast(130%) brightness(28%);
-		/* box-shadow: 0 0 20px #000 inset; */
-		/* background: #1f1f1f; */
-		/* border: 2px solid #333; */
-	}
-	#lastPlayedPillContainer {
-		height: 140px;
-		width: 620px;
 		border-top-left-radius: 400px;
 		border-bottom-left-radius: 400px;
 		margin-top: 20px;
@@ -238,71 +247,90 @@
 		overflow: hidden;
 		border: 1px solid #444;
 	}
-	#lastPlayedSectionTitle {
-		font-size: 18px;
-		margin-left: 5px;
-		font-family: 'Josefin Sans', sans-serif;
-	}
-	#likedSongsButtonContainer {
+	#likedSongsContainer {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		border-top-right-radius: 400px;
+		border-bottom-right-radius: 400px;
 		background: url("https://w0.peakpx.com/wallpaper/395/439/HD-wallpaper-purple-heart-galaxy-galaxy-hearts-purple-thumbnail.jpg");
 		overflow: hidden;
 		background-repeat: no-repeat;
 		background-size: cover;
-		height: 140px;
-		width: 620px;
+	}
+	#lastPlayed, #likedSongs {
+		height: 100%;
+		width: 100%;
+		backdrop-filter: blur(7px) contrast(130%) brightness(28%);
+		/* margin: 20px; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 5px;
+	}
+	/* #likedSongsButtonContainer {
+		height: 80%;
+		width: 100%;
+		border-top-left-radius: 400px;
+		border-bottom-left-radius: 400px;
+		margin-top: 20px;
+		margin-right: 5px;
+		overflow: hidden;
+		border: 1px solid #444;
+		background: url("https://w0.peakpx.com/wallpaper/395/439/HD-wallpaper-purple-heart-galaxy-galaxy-hearts-purple-thumbnail.jpg");
+		overflow: hidden;
+		background-repeat: no-repeat;
+		background-size: cover;
 		margin-top: 39px;
 		border-top-right-radius: 400px;
 		border-bottom-right-radius: 400px;
 		border: 1px solid #444;
-	}
-	#likedSongs {
 		height: 100%;
 		width: 100%;
-		margin-right: 20px;
+		height: 140px;
+		width: 620px;
+	} */
+	#likedSongs {
 		backdrop-filter: blur(7px) contrast(130%) brightness(70%);
-		/* box-shadow: 0 0 20px #000 inset; */
-		/* background: #1f1f1f; */
-		/* border: 2px solid #333; */
 	}
 
 	#secondaryHomeSection {
 		display: inline-flex;
 		margin-bottom: 20px;
 	}
-	#lastPlayed {
-		display: flex;
-		align-items: center;
-		padding-top: 5px;
-	}
 
-	#lastPlayedPillContainer:hover {
+	#lastPlayedContainer:hover {
 		/* backdrop-filter: blur(0) contrast(130%) brightness(20%); */
-		transform: scale(1.03);
+		/* transform: scale(1.03); */
 		border-radius: 400px;
 		margin-right: 40px;
 		cursor: pointer;
+		box-shadow: 0 0 20px #331368;
 	}
-	#likedSongsButtonContainer:hover {
+	#likedSongsContainer:hover {
 		/* backdrop-filter: blur(4px) contrast(130%) brightness(20%); */
-		transform: scale(1.03);
+		/* transform: scale(1.03); */
 		border-radius: 400px;
 		margin-left: 40px;
 		cursor: pointer;
+		box-shadow: 0 0 20px #331368;
 	}
 
-	#playButtonEffectContainer {
+	#playButtonContainer {
 		position: relative;
+		right: 25px;
+	}
+
+	#lastPlayedArt, #likedSongsArt {
+		margin: 7px 14px;
 	}
 
 	#lastPlayedArt > img {
 		width: 115px;
 		border-radius: 300px;
-		margin-left: 20px;
 		background: #0a0a0a;
 	}
 	#lastPlayedDetails,
 	#likedSongsDetails {
-		margin-left: 20px;
 		width: 405px;
 		/*background: #6f16ff;*/
 	}
@@ -325,18 +353,24 @@
 		gap: 2vw;
 		/* grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
 		grid-template-rows: 250px 250px 250px; */
-		grid-template-columns: auto auto auto auto auto auto auto;
-		grid-template-rows: auto auto auto;
+		/* grid-template-columns: auto auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto; */
+		/* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr; */
+		grid-template-columns: repeat(7, 1fr);
+		grid-template-rows: 1fr 1fr 1fr .1fr;
+		/* margin-right: 20px; */
+		width: 92%;
 	}
 	#likedSongs {
 		display: flex;
 		align-items: center;
 	}
 	#heartIcon {
-		margin-left: 20px;
 		background: #0a0a0a;
 		padding: 25px;
 		border-radius: 300px;
+		width: 65px;
 	}
 	#homePageTitleContainer {
 		font-size: 25px;
@@ -385,6 +419,69 @@
 	#exploreMoreHome:hover {
 		color: #8d3eff;
 	}
+
+	@media only screen and (max-width: 1800px) {
+		#homeCardContainer {
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-rows: 1fr 1fr 1fr 1fr .1fr;
+		}
+	}
+
+	@media only screen and (max-width: 1560px) {
+		#homeCardContainer {
+			grid-template-columns: repeat(5, 1fr);
+			grid-template-rows: 1fr 1fr 1fr 1fr 1fr .1fr;
+		}
+	}
+
+	@media only screen and (max-width: 1480px) {
+		#secondaryHomeSection {
+			flex-direction: column;
+			width: 91%;
+		}
+		#lastPlayedContainer, #likedSongsContainer {
+			border-radius: 400em;
+		}
+		#lastPlayed, #likedSongs {
+			justify-content: flex-start;
+		}
+		#playButtonContainer {
+			position: absolute;
+			right: 40px;
+		}
+	}
+
+	@media only screen and (max-width: 1300px) {
+		#homeCardContainer {
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr .1fr;
+		}
+	}
+
+	@media only screen and (max-width: 970px) {
+		#homePage {
+			margin-left: 9vw;
+			/* width: 100vw; */
+		}
+	}
+
+	@media only screen and (max-width: 840px) {
+		#homeCardContainer {
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr .1fr;
+		}
+		#lastPlayedArt > img {
+			width: 70px;
+		}
+		#heartIcon {
+			width: 40px;
+			padding: 12px;
+		}
+		/* #lastPlayedContainer {
+			height: 
+		} */
+	}
+
 	/* @media only screen and (max-width: 1740px) {
 		#homePage {
 			margin-top: 30px;

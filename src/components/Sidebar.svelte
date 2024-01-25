@@ -342,27 +342,29 @@
 		opacity: 0;
 	}
 
-	@media only screen and (max-width: 1400px) {
+	@media only screen and (max-width: 970px) {
 		#sideNav {
-			width: 100%;
+			position: fixed;
+			top: auto;
+			bottom: 0;
+			height: 9%;
+			width: 100vw;
+			border: 1px solid #444;
+			background: #070707c4;
+			backdrop-filter: blur(12px) brightness(90%);
+			border-top-left-radius: 30px;
+			border-top-right-radius: 30px;
+		}
+		#playQueueContainer {
+			display: none;
+		}
+		#navMenu {
 			display: flex;
+			flex-direction: row;
+		}
+		#navMenuItem {
 			align-items: center;
-			/* margin-right: 20px; */
-		}
-		.navMenuText {
-			display: none;
-		}
-		#playQueueTitle {
-			display: none;
-		}
-		#createQueueButton {
-			display: none;
-		}
-	}
-
-	@media only screen and (max-width: 750px) {
-		#sideNav {
-			display: none;
+			padding-left: 0;
 		}
 	}
 </style>

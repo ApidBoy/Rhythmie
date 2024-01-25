@@ -21,7 +21,7 @@
 	{#each results.data.albums as element}
 		<div class="homeCard">
 			<img id="homeCardImg" src={element.image[1].link} alt="Card" />
-			<div id="homeCardTitle">{limitString(element.name, 18)}</div>
+			<div id="homeCardTitle">{limitString(element.name, 14)}</div>
 			{#if element.artists && element.artists[0] && element.artists[0].name !== undefined}
 				<div id="homeCardArtist">{limitString(element.artists[0].name, 14)}</div>
 			{:else}
@@ -39,6 +39,8 @@
 
 <style>
 	.homeCard {
+		/* height: 100%;
+		width: 96%; */
 		height: 227px;
 		width: 180px;
 		text-align: left;
@@ -55,6 +57,8 @@
 		opacity: .7;
 	}
 	#homeCardImg {
+		/* max-height: 150px;
+		max-width: 150px; */
 		height: 150px;
 		width: 150px;
 		transition: 0.4s;
@@ -87,41 +91,29 @@
 		border-radius: 20px;
 	}
 
-	@media only screen and (max-width: 880px) {
-		#homeCardImg,
+
+	@media only screen and (max-width: 1070px) {
 		.homeCard {
-			height: 150px;
+			height: 207px;
 			width: 150px;
+			align-items: flex-start;
+			background: transparent;
+		}
+		#homeCardImg {
+			margin-top: 0;
 		}
 	}
 
-	@media only screen and (max-width: 750px) {
-		#homeCardImg,
+	/* @media only screen and (max-width: 970px) {
 		.homeCard {
-			height: 110px;
-			width: 110px;
+			height: 227px;
+			width: 180px;
+			align-items: center;
+			background: #171717;
 		}
-		#homeCardTitle {
-			font-size: 14px;
+		#homeCardImg {
+			margin-top: 10px;
 		}
-	}
+	} */
 
-	@media only screen and (max-width: 550px) {
-		#homeCardTitle {
-			margin-top: 5px;
-			font-size: 12px;
-		}
-		#homeCardImg,
-		.homeCard {
-			height: 90px;
-			width: 90px;
-			border-radius: 12px;
-		}
-	}
-	@media only screen and (max-width: 440px) {
-		#homeCardTitle {
-			margin-top: 5px;
-			font-size: 13px;
-		}
-	}
 </style>
