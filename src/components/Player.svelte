@@ -376,7 +376,7 @@
 			bottom: 60px;
 			left: 5%;
 			border-radius: 20px;
-			height: 85px;
+			height: 65px;
 			width: 90%;
 			display: flex;
 			justify-content: center;
@@ -409,24 +409,24 @@
 			display: none;
 		}
 		#musicComponent > img {
-			width: 22px;
-			margin-right: 1px;
+			width: 18px;
+			margin-right: 0;
 		}
 		#musicComponent {
-			margin-right: 20px;
+			margin-right: 15px;
 		}
 		#songArtContainer {
 			left: 14px;
 		}
 		#songArt {
-			height: 55px;
-			width: 55px;
+			height: 42px;
+			width: 42px;
 		}
 		#musicInfo {
-			bottom: 22px;
+			bottom: 15px;
 		}
 		#songInfo {
-			left: 86px;
+			left: 68px;
 		}
 	}
 	@media only screen and (max-width: 600px) {
@@ -437,7 +437,7 @@
 			font-size: .9em;
 		}
 		#musicInfo {
-			bottom: 25px;
+			bottom: 15px;
 		}
 		#seekBar {
 			height: 3px;

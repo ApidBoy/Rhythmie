@@ -344,10 +344,6 @@
                                 <img class="extendedButtonIcons" id="youtubeIcon" alt="YouTube logo" src={youtube} />
                                 Search YouTube
                             </button>
-                            <button on:click={() => location.href = `https://genius.com/search?q=${searchResults.topQuery.results[0].primaryArtists}`}>
-                                <img class="extendedButtonIcons" alt="Artist logo" src={artist} />
-                                Go to artist
-                            </button>
                             <button>
                                 <img class="extendedButtonIcons" alt="Queue logo" src={add}/>
                                 Add to queue
@@ -401,7 +397,7 @@
 
 
 				<div id="albumsCategory" class="categoryTitle">Albums</div>
-				<section class="searchResultsContainer" id="topResultsAlbums">
+				<section id="topResultsAlbums">
 					{#each searchResults.albums.results as element}
 						<div class="searchAlbumResults">
 							{#if element.image[1].link}
@@ -431,7 +427,7 @@
 				</section>
 
 				<div id="artistsCategory" class="categoryTitle">Artists</div>
-				<section class="searchResultsContainer" id="artistsContainer">
+				<section id="artistsContainer">
 					{#each searchResults.artists.results as element}
 						<div class="searchAlbumResults">
 							{#if element.image[1].link}
@@ -839,6 +835,7 @@
 
 	.searchCategory {
 		font-size: 1rem;
+		white-space: nowrap;
 		margin: 0 10px;
 		opacity: 0.5;
 		-webkit-touch-callout: none;
@@ -1037,7 +1034,7 @@
 		#mobileContents {
 			display: block;
 			margin-top: 70px;
-			margin-bottom: 70px;
+			margin-bottom: 110px;
 		}
 		#contentsContainer {
 			margin-left: -30px;
@@ -1049,7 +1046,6 @@
 			margin-bottom: 30px;
 		}
 		.searchCategory {
-			font-size: .9rem;
 			margin: 0 6px;
 			padding: 8px 10px;
 		}
@@ -1096,13 +1092,14 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			margin-top: 6px;
 		}
 		#extendedIcons > button {
 			/* font-family: 'Josefin Sans', sans-serif; */
 			margin: 2vw .6vw;
 			color: #ccc;
 			background: #242424;
-			padding: .8vw 1vw;
+			padding: 1.2vw 2vw;
 			border-radius: .5em;
 			display: flex;
 			align-items: center;
@@ -1164,26 +1161,140 @@
 		
 
 		#topResultsAlbums, #artistsContainer {
+			display: none;
+			overflow-x: scroll;
 			margin-left: 0;
 			width: 100%;
-			overflow-x: scroll;
-			display: flex;
-			flex-direction: row;
+			display: grid;
+			grid-template-columns: auto auto auto auto;
 			justify-content: flex-start;
-			gap: 4vw;
-			margin: 40px 0;
-			margin-bottom: 78px;
+			align-items: center;
+			gap: 2vw;
+			margin-left: -10px;
+			margin-bottom: -20px;
 		}
 		#topResultsAlbums::-webkit-scrollbar, #artistsContainer::-webkit-scrollbar {
 			display: none;
 		}
 
+		.searchAlbumResults {
+			height: 229px;
+			width: 180px;
+			background: transparent;
+			border-radius: 0;
+		}
+
+		#moreButton {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	
+
+	}
+
+	@media only screen and (max-width: 500px) {
+
+		.categoryTitle {
+			margin-left: 10px;
+			font-size: 1.2em;
+			margin-top: 10px;
+		}
+
+
+		#albumsCategory {
+        	margin-top: 4vh;
+		}
+		#artistsCategory {
+			margin-top: 4vh;
+		}
+
+	
+		.searchCategory {
+			margin: 0 4px;
+			padding: 6px 8px;
+		}
+
+		.searchCategory > button {
+			font-size: .8rem;
+		}
+
+		.searchResultsContainer {
+			width: 100%;
+			/* background-color: #ff0; */
+		}
+		.searchResults {
+			width: 100%;
+			/* background: #0f0; */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-left: 30px;
+		}
+
+		#searchedMusicArt {
+			margin-left: 0;
+		}
+
+		#searchedPlayButton {
+			width: 18px;
+			margin-right: 10px;
+			opacity: 1;
+		}
+		#topMostResultSongs {
+			width: 100%;
+		}
+
+		
+		#topMostResultSongTitle {
+			font-size: 1.2em;
+		}
+		#topMostResultSongArtist {
+			font-size: .8em;
+		}
+
+
+		
+		#searchedSongTitle {
+			font-size: 1em;
+			margin-bottom: 4px;
+		}
+
+		#searchedSongArtist {
+			font-size: .9em;
+		}
+
+
+
+		
+		#topResultsAlbums, #artistsContainer {
+			display: none;
+			overflow-x: hidden;
+			margin-left: 0;
+			width: 100%;
+			height: 100%;
+			display: grid;
+			grid-template-columns: auto auto;
+			grid-template-rows: auto auto;
+			justify-content: center;
+			align-items: center;
+			gap: 2vw;
+		}
+		#topResultsAlbums::-webkit-scrollbar, #artistsContainer::-webkit-scrollbar {
+			display: none;
+		}
 
 		.searchAlbumResults {
 			height: 229px;
 			width: 180px;
-			background: #171717;
-			border-radius: 20px;
+			background: transparent;
+			border-radius: 0;
+		}
+
+		#moreButton {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 	}
