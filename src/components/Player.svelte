@@ -87,7 +87,10 @@
 		if(fullscreenPlayerToggle) {
 			document.getElementById('songArt').style.opacity = .4;
 			document.getElementById('uparrow').style.opacity = 1;
+			if (!window.matchMedia("(max-width: 580px)"))
 			document.getElementById('songInfo').style.top = "14px";
+			else
+			document.getElementById('songInfo').style.top = "8px";
 			document.getElementById('songName').innerHTML = "Now playing";
 			document.getElementById('songArtist').style.visibility = "hidden";
 			// document.getElementById('songArtist').innerHTML = "Click on this button to disable";

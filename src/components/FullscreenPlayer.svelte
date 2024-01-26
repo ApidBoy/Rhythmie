@@ -66,7 +66,7 @@
 
 <section id="playerContainer">
 
-    {#if songDetails.length !== 0}    
+    {#if songDetails.length !== 0}
     <div id="songData">
         <div id="songArtContainer">
             <img src={songDetails.data[0].image[2].link} draggable={false} id="songArt" alt="Music art" />
@@ -81,22 +81,24 @@
         <PlayerSkeleton />
 
     {/if}
-    <div id="songLyrics">
-        <div id="lyricsTitle">
-            Lyrics
+    <div id="lyricsContainer">
+        <div id="songLyrics">
+            <div id="lyricsTitle">
+                Lyrics
+            </div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
+            <div id="lyric"></div>
         </div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
-        <div id="lyric"></div>
     </div>
 </section>
 
@@ -107,6 +109,7 @@
         display: flex;
         justify-content: start;
         align-items: center;
+        backdrop-filter: blur(10px);
     }
     #songData {
         display: flex;
@@ -252,5 +255,77 @@
         border-radius: 5px;
         margin-left: 5%;
     }
+
+
+    
+	@media only screen and (max-width: 970px) {
+        #playerContainer {
+            flex-direction: column;
+            height: 168vh;
+            align-items: center;
+            margin-left: -7vw;
+        }
+        #songArtContainer {
+            min-height: 20em;
+            min-width: 20em;
+            max-height: 20em;
+            max-width: 20em;
+            overflow: hidden;
+            z-index: 0;
+        }
+        #songLyrics {
+            /* display: none; */
+            position: relative;
+        }
+        #songData {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0;
+            height: 100vh;
+        }
+        #songInfo {
+            margin-left: 0;
+        }
+        #songName {
+            height: 12%;
+            width: 100%;
+            /* background: #fff; */
+            border-radius: 2rem;
+            margin-top: 8%;
+            margin-bottom: 1%;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 2rem;
+        }
+        #songArtist {
+            margin-top: .7em;
+            margin-left: .1em;
+            border-radius: 2rem;
+            color: #8f49ff;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.2rem;
+            width: 35vw;
+        }
+        #lyricsContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10vw;
+        }
+        #songLyrics {
+            min-height: 50vh;
+            min-width: 90vw;
+            max-height: 50vh;
+            max-width: 90vw;
+        }
+        #lyricsTitle {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.4rem;
+            margin: 20px 0;
+            margin-left: 5%;
+        }
+    }
+
 
 </style>
