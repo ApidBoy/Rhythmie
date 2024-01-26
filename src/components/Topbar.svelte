@@ -23,7 +23,7 @@
 		handleSearch();
 		if(searchText === '')
     		goto('/explore');
-  	}, 1000);
+  	}, 1500);
 
 	const handleInput = (event) => {
     	searchText = event.target.value;
