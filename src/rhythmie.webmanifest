@@ -1,0 +1,22 @@
+{
+    "name": "Rhythmie | Just you and music <3",
+    "short_name": "Rhythmie",
+    "description": "A Svelte.js based music streaming application.",
+    "icons": [
+      {
+        "src": "../static/favicon.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      },
+      {
+        "src": "../static/favicon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "app.html",
+    "display": "fullscreen",
+    "theme_color": "#8f49ff",
+    "background_color": "#171717"
+  }
+  
