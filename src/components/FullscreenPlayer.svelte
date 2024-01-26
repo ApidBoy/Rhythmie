@@ -268,7 +268,7 @@
 			color: #8f49ff;
 			font-family: 'Josefin Sans', sans-serif;
 			font-size: .9rem;
-			width: 35vw;
+			width: 100%;
 		}
 		#lyricsContainer {
 			display: flex;
