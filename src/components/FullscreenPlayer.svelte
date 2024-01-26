@@ -252,7 +252,7 @@
 			margin-left: 0;
 		}
 		#songName {
-			height: 9%;
+			height: 10%;
 			width: 100%;
 			/* background: #fff; */
 			border-radius: 2rem;
