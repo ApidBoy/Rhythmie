@@ -1190,6 +1190,30 @@
 			margin-top: 10px;
 		}
 
+		.topMostResult {
+			height: 9vh;
+		}
+
+		#topMostResult {
+			border-radius: 0;
+			margin-top: 30px;
+			margin-bottom: -40px;
+		}
+
+		#nowPlayingContainer {
+			height: 9vh;
+			width: 9vh;
+		}
+		#nowPlaying {
+			height: 9vh;
+			width: 9vh;
+		}
+
+		#topMostResultMusicArt {
+			height: 9vh;
+			width: 9vh;
+		}
+
 
 		#albumsCategory {
         	margin-top: 4vh;
@@ -1199,7 +1223,11 @@
 		}
 
 		#topMostResultIcons {
-			margin-right: 26px;
+			margin-right: 22px;
+		}
+
+		#topMostResultPlayButton {
+			width: 18px;
 		}
 
 	
