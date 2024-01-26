@@ -487,6 +487,9 @@
 		#fireEmoji {
 			height: 20px;
 		}
+		#handWaveEmoji {
+			padding-left: 0;
+		}
 	}
 	@media only screen and (max-width: 580px) {
 		#homeCardContainer {

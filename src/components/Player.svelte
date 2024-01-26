@@ -46,8 +46,8 @@
 		setTimeout(() => {
 			if (songDetails.length !== 0) {
 				localStorage.setItem('mostRecentSong', JSON.stringify(songDetails.data[0]));
-				document.getElementById('songName').innerHTML = limitString(songDetails.data[0].name, 24);
-				document.getElementById('songArtist').innerHTML = limitString(songDetails.data[0].primaryArtists, 30);
+				document.getElementById('songName').innerHTML = limitString(songDetails.data[0].name, 35);
+				document.getElementById('songArtist').innerHTML = limitString(songDetails.data[0].primaryArtists, 38);
 				playPause();
 			}
 		}, 1000);
@@ -98,8 +98,8 @@
 			document.getElementById('uparrow').style.opacity = 0;
 			document.getElementById('songInfo').style.top = "0";
 			document.getElementById('songArtist').style.visibility = "visible";
-			document.getElementById('songName').innerHTML = songDetails.data[0].name;
-			document.getElementById('songArtist').innerHTML = songDetails.data[0].primaryArtists;
+			document.getElementById('songName').innerHTML = limitString(songDetails.data[0].name, 35);
+			document.getElementById('songArtist').innerHTML = limitString(songDetails.data[0].primaryArtists, 38);
 			window.history.back();
 			fullscreenPlayerToggle = true;
 		}
@@ -115,8 +115,8 @@
 			</a>
 			<div id="songInfo">
 				<div id="songTitle">
-					<span id="songName">{limitString(songDetails.data[0].name, 24)}</span>
-					<div id="songArtist">{limitString(songDetails.data[0].primaryArtists, 26)}</div>
+					<span id="songName">{limitString(songDetails.data[0].name, 35)}</span>
+					<div id="songArtist">{limitString(songDetails.data[0].primaryArtists, 38)}</div>
 				</div>
 			</div>
 		</div>
@@ -407,7 +407,7 @@
 			justify-content: flex-end;
 			align-items: center;
 		}
-		#shuffleButton, #repeatButton, #prevButton {
+		#shuffleButton, #repeatButton, #prevButton, #nextButton {
 			display: none;
 		}
 		#musicComponent > img {
@@ -442,10 +442,10 @@
 			font-size: .8em;
 		}
 		#musicInfo {
-			bottom: 15px;
+			bottom: 16px;
 		}
 		#seekBar {
-			height: 3px;
+			height: 2px;
 		}
 	}
 </style>

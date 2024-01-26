@@ -357,7 +357,10 @@
 				<div class="categoryTitle">Songs</div>
 				<section class="searchResultsContainer" id="topMostResultSongs">
 					{#each searchResults.songs.results as element}
-						<div class="searchResults">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<div on:click={() => fetchSong(element.id)} class="searchResults">
 							{#if element.image[0].link}
 								<div id="musicArtContainer">
 									<object
@@ -374,14 +377,10 @@
 							{/if}
 							<div id="searchedSongInfo">
 								<div id="actualInfo">
-									<div id="searchedSongTitle">{limitString(element.title, 24)}</div>
-									<div id="searchedSongArtist">{limitString(element.primaryArtists, 22)}</div>
+									<div id="searchedSongTitle">{limitString(element.title, 40)}</div>
+									<div id="searchedSongArtist">{limitString(element.primaryArtists, 44)}</div>
 								</div>
 								<div class="topSearchIcons" id="searchedIcons">
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
-									<img on:click={() => fetchSong(element.id)} draggable={false} id="searchedPlayButton" src={play} alt="" />
 									<img
 										draggable={false}
 										id="searchedOptionButton"
@@ -647,7 +646,6 @@
 		height: 5.9vh;
 		width: 100%;
 		display: flex;
-		align-items: center;
 		padding: 0.7em 0.7em;
 		margin-bottom: 0.4em;
 		transition: 0.4s;
@@ -657,7 +655,7 @@
 	}
 
 	.topSearchIcons {
-		margin-left: 110px;
+		margin-left: 10px;
 	}
 
 	#searchedIcons {
@@ -710,7 +708,6 @@
 		justify-content: center;
 		align-items: flex-start;
 		width: 100%;
-		/* background: #00f; */
 	}
 
 	#searchedSongInfo {
@@ -725,6 +722,7 @@
 		width: 100%;
 		margin-bottom: 10px;
 		font-size: 17px;
+		white-space: nowrap;
 	}
 
 	#searchedSongArtist {
@@ -1132,6 +1130,7 @@
 			align-items: center;
 			justify-content: center;
 			/* margin-left: -10px; */
+			margin-bottom: .2em;
 		}
 
 		#searchedMusicArt {
@@ -1223,7 +1222,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			margin-left: 30px;
+			margin-left: 20px;
 		}
 
 		#searchedMusicArt {
