@@ -3,17 +3,18 @@
 
 	import fav from '$lib/res/unfav.png';
 	import dots from '$lib/res/dots.png';
-	import volumeButton from '$lib/res/volume.png';
-	import defaultImg from '$lib/res/default.png';
 	import shuffle from '$lib/res/shuffle.png';
 	import prev from '$lib/res/prev.png';
 	import play from '$lib/res/play.png';
 	import pause from '$lib/res/pause.png';
 	import next from '$lib/res/next.png';
 	import repeat from '$lib/res/repeat.png';
+	import pauseIcon from '$lib/res/pause-button.png';
+	import playIcon from '$lib/res/play-button.png';
+	import defaultImg from '$lib/res/default.png';
+	import arrowIcon from '$lib/res/down.png';
 	import { playerData, converter, limitString } from '../store';
 	import PlayerSkeleton from './skeletons/PlayerSkeleton.svelte';
-	import { onMount } from 'svelte';
 
 	let songDetails;
 	let audio;
@@ -110,6 +111,113 @@
 			<div id="lyric"></div>
 			<div id="lyric"></div>
 		</div>
+
+
+
+        
+	<div id="playQueueContainer">
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div id="playQueue">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div id="playQueueTitle">Your Queue
+				<img id="expand" src={arrowIcon} alt='' />
+			</div>
+			<div id="queueContainer">
+				<div id="queueItem" class="activeItem">
+					<div id="queueItemArtContainer">
+						{#if songDetails.data.length !== 0}
+							<object id="queueItemArt" data={songDetails.data[0].image[0].link} type="image/png" aria-label="">
+								<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+							</object>
+						{:else}
+							<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+								<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+							</object>
+						{/if}
+					</div>
+					<div id="queueItemInfo">
+						{#if songDetails.data.length !== 0}
+							<div id="queueItemTitle">{limitString(songDetails.data[0].name, 16)}</div>
+							<div id="queueItemArtist">{limitString(songDetails.data[0].primaryArtists, 16)}</div>
+						{:else}
+						<div id="queueItemTitle">Song name</div>
+						<div id="queueItemArtist">Song Artist</div>
+						{/if}
+
+					</div>
+					<div id="nowPlayingIconContainer">
+						<img src={pauseIcon} id="nowPlayingIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="queueItem">
+					<div id="queueItemArtContainer">
+						<object id="queueItemArt" data={defaultImg} type="image/png" aria-label="">
+							<img id="queueItemArt" src={defaultImg} onError={defaultImg} alt=''/>
+						</object>
+					</div>
+					<div id="queueItemInfo">
+						<div id="queueItemTitle">Song Name</div>
+						<div id="queueItemArtist">Song Artist</div>
+					</div>
+					<div id="playIconContainer">
+						<img src={playIcon} id="playIcon" alt='' />
+					</div>
+				</div>
+				<div id="clearQueue">
+					<div id="clearQueueButton">
+						Clear queue
+					</div>
+				</div>
+			</div>
+			<div id="emptyQueue">
+				<div id="createQueueButton">
+					Create a queue
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 </section>
 
@@ -169,7 +277,6 @@
         display: none;
 		height: 0;
         width: 100%;
-		display: flex;
         flex-direction: column;
         margin-top: -22vh;
 	}
@@ -193,15 +300,18 @@
 		min-width: 400px;
 		max-height: 500px;
 		max-width: 400px;
-		background: #1717177a;
+        background: #1717179f;
 		margin: 10px;
 		border-radius: 20px;
+        transform: translateY(-50%);
 		position: absolute;
-		right: 5vw;
+        top: 50%;
+		right: 10vw;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(20px);
+		border: 1px solid #444;
 	}
 	#lyricsTitle {
 		font-family: 'Josefin Sans', sans-serif;
@@ -212,18 +322,119 @@
 	#lyric {
 		height: 80px;
 		width: 90%;
-		background: #272727;
+		background: #333;
 		margin-bottom: 20px;
 		border-radius: 5px;
 		margin-left: 5%;
 	}
 
+
+    
+	#playQueueContainer {
+        display: none;
+		width: 90%;
+		border-radius: 20px;
+		overflow: hidden;
+		padding-right: 20px;
+		border: 1px solid #444;
+        position: relative;
+        top: 10.5vh;
+        background: #1717179f;
+		backdrop-filter: blur(20px);
+	}
+	#playQueue {
+		padding-left: 10px;
+		width: 100%;
+		margin-bottom: 12px;
+	}
+	#playQueueTitle {
+		font-size: 17px;
+		margin-top: 20px;
+		margin-left: 10px;
+	}
+	#playQueueTitle > img {
+		float: right;
+		margin-right: 6px;
+		width: 24px;
+		transform: rotate(180deg);
+	}
+
+	#emptyQueue {
+		display: none;
+		flex-direction: column;
+	}
+
+	#createQueueButton {
+		font-size: 17px;
+		color: #999;
+	}
+
+	#clearQueueButton {
+		font-size: 15px;
+		color: #999;
+		width: 100%;
+		display: none;
+	}
+
+	#queueContainer {
+		margin-top: 20px;
+	}
+
+	#queueItem {
+		display: flex;
+		align-items: center;
+		height: 50px;
+		border-radius: 14px;
+		margin-bottom: 8px;
+		transition: .2s;
+	}
+	.activeItem {
+		background: #222;
+	}
+	#queueItemArtContainer {
+		display: flex;
+		margin-left: 10px;
+	}
+	#queueItemArt {
+		width: 35px;
+		height: 35px;
+		border-radius: 150px;
+	}
+	#queueItemTitle {
+		font-size: .8em;
+		margin-bottom: 2px;
+	}
+	#queueItemArtist {
+		font-size: .7em;
+		color: #999;
+	}
+	#queueItemInfo {
+		display: flex;
+		flex-direction: column;
+		margin-left: 10px;
+		width: 100%;
+	}
+
+	#nowPlayingIcon {
+		width: 20px;
+		padding-right: 12px;
+	}
+
+	#playIcon {
+		width: 20px;
+		padding-right: 12px;
+		opacity: 0;
+	}
+
+
+
 	@media only screen and (max-width: 970px) {
 		#playerContainer {
 			flex-direction: column;
-			height: 168vh;
+			height: 189vh;
 			align-items: center;
 			margin-left: -7vw;
+            padding-bottom: 130px;
 		}
 		#songArtContainer {
 			min-height: 20em;
@@ -270,18 +481,31 @@
 			font-size: .9rem;
 			width: 100%;
 		}
+        #musicControls {
+		    display: flex;
+        }
 		#lyricsContainer {
 			display: flex;
-			justify-content: center;
+			/* justify-content: center; */
 			align-items: center;
-			margin-left: 10vw;
-			margin-top: 10vh;
+            flex-direction: column;
 		}
 		#songLyrics {
 			min-height: 50vh;
 			min-width: 90vw;
 			max-height: 50vh;
 			max-width: 90vw;
+            background: #1717179f;
+            margin: 10px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transform: none;
+            position: relative;
+            top: 10vh;
+            right: .4vw;
 		}
 		#lyricsTitle {
 			font-family: 'Josefin Sans', sans-serif;
@@ -289,5 +513,9 @@
 			margin: 20px 0;
 			margin-left: 5%;
 		}
-	}
+        
+        #playQueueContainer {
+            display: flex;
+        }
+    }
 </style>

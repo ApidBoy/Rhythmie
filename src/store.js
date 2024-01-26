@@ -2,10 +2,12 @@
 import { writable } from 'svelte/store';
 
 export const limitString = (str, limit) => {
-    if (str.length > limit) {
-        return str.slice(0, limit) + '...';
-    } else {
-        return str;
+    if (str !== undefined) {
+        if (str.length > limit) {
+            return str.slice(0, limit) + '...';
+        } else {
+            return str;
+        }
     }
 };
 

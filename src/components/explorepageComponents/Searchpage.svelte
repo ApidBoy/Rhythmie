@@ -53,6 +53,7 @@
 		await fetch(`https://saavn.me/search/all?query=${searchText}`)
 		.then((response) => response.json())
 		.then((data) => {
+			console.log("Data -", data);
 			searchResultStore.set(data.data);
 		});
 	}
@@ -61,6 +62,9 @@
 </script>
 
 <div id="contentsContainer">
+	{#if searchResults.songs.results.length === 0}
+	<div>LOL</div>
+	{:else}
 	<section id="contents">
 		<section id="row">
 			<div id="categoryContainer">
@@ -82,6 +86,7 @@
 			</div>
 
 			<div id="insideRow">
+				<!-- {#if searchResults.topQuery.results.length !== 0} -->
 				<div class="categoryTitle">Top Result for "{searchText}"</div>
 				<section class="searchResultsContainer" id="topMostResult">
                     <div id="topMostExtended">
@@ -89,13 +94,13 @@
 							<div id="songArtContainer">
 								<object
 									id="topMostResultMusicArt"
-									data={searchResults.topQuery.results[0].image[1].link}
+									data={searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].image[1].link : searchResults.songs.results[0].image[1].link}
 									type="image/png"
 									aria-label="Song Art"
 								>
 									<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
 								</object>
-								{#if playerDataVariable.length !== 0 && searchResults.topQuery.results[0].id === playerDataVariable.data[0].id}
+								{#if playerDataVariable.length !== 0 && (searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].id : searchResults.songs.results[0].id === playerDataVariable.data[0].id)}
 								<div id="nowPlayingContainer">
 									<img draggable={false} id="nowPlaying" src={now} alt="" />
 								</div>
@@ -104,30 +109,34 @@
                             <div id="topMostResultSongInfo">
                                 <div id="topMostActualInfo">
                                     <div id="topMostResultSongTitle">
-                                        {searchResults.topQuery.results[0].title}
+                                        {searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].title : searchResults.songs.results[0].title}
                                     </div>
                                     <div id="topMostResultSongArtist">
-                                        {#if searchResults.topQuery.results[0].type === "artist"}
-                                            {searchResults.topQuery.results[0].description}
-                                        {:else}
-                                            {searchResults.topQuery.results[0].primaryArtists}
-                                        {/if}
+										{#if searchResults.topQuery.results.length !== 0}
+											{#if searchResults.topQuery.results[0].type === "artist"}
+												{searchResults.topQuery.results[0].description}
+											{:else}
+												{searchResults.topQuery.results[0].primaryArtists}
+											{/if}
+										{:else}
+											{searchResults.songs.results[0].primaryArtists}
+										{/if}
                                     </div>
                                 </div>
                                 <div class="topMostResultIcons" id="topMostResultIcons">
                                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                                     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                                    <img on:click={() => fetchSong(searchResults.topQuery.results[0].id)} draggable={false} id="topMostResultPlayButton" src={play} alt="" />
+                                    <img on:click={() => fetchSong(searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].id : searchResults.songs.results[0].id)} draggable={false} id="topMostResultPlayButton" src={play} alt="" />
                                 </div>
                             </div>
                         </div>
                         <div id="extendedIcons">
                             <img draggable={false} id="topMostResultFavButton" class="searchedIcons" src={unfav} alt="" />
-                            <button on:click={() => location.href = `https://youtube.com/results?search_query=${searchResults.topQuery.results[0].title} by ${searchResults.topQuery.results[0].primaryArtists}`}>
+                            <button on:click={() => location.href = `https://youtube.com/results?search_query=${searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].title : searchResults.songs.results[0].title} by ${searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].primaryArtists : searchResults.songs.results[0].primaryArtists}`}>
                                 <img class="extendedButtonIcons" id="youtubeIcon" alt="YouTube logo" src={youtube} />
                                 Search YouTube
                             </button>
-                            <button on:click={() => location.href = `https://genius.com/search?q=${searchResults.topQuery.results[0].primaryArtists}`}>
+                            <button on:click={() => location.href = `https://genius.com/search?q=${searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].primaryArtists : searchResults.songs.results[0].primaryArtists}`}>
                                 <img class="extendedButtonIcons" alt="Artist logo" src={artist} />
                                 Go to artist
                             </button>
@@ -139,6 +148,7 @@
                         </div>
                     </div>
 				</section>
+				<!-- {/if} -->
 
 				<div id="albumsCategory" class="categoryTitle">Albums</div>
 				<section class="searchResultsContainer" id="topResultsAlbums">
@@ -299,20 +309,21 @@
 			</div>
 
 
-				<div class="categoryTitle">Top Result for "{searchText}"</div>
+			<!-- {#if searchResults.topQuery.results.length !== 0} -->
+				<div class="categoryTitle">Top Result for "{limitString(searchText, 30)}"</div>
 				<section class="searchResultsContainer" id="topMostResult">
                     <div id="topMostExtended">
                         <div class="topMostResult">
 							<div id="songArtContainer">
 								<object
 									id="topMostResultMusicArt"
-									data={searchResults.topQuery.results[0].image[1].link}
+									data={searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].image[1].link : searchResults.songs.results[0].image[1].link}
 									type="image/png"
 									aria-label="Song Art"
 								>
 									<img id="failedMusicArt" src={defaultImg} onError={defaultImg} alt="" />
 								</object>
-								{#if playerDataVariable.length !== 0 && searchResults.topQuery.results[0].id === playerDataVariable.data[0].id}
+								{#if playerDataVariable.length !== 0 && (searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].id : searchResults.songs.results[0].id === playerDataVariable.data[0].id)}
 								<div id="nowPlayingContainer">
 									<img draggable={false} id="nowPlaying" src={now} alt="" />
 								</div>
@@ -321,26 +332,30 @@
                             <div id="topMostResultSongInfo">
                                 <div id="topMostActualInfo">
                                     <div id="topMostResultSongTitle">
-                                        {limitString(searchResults.topQuery.results[0].title, 19)}
+                                        {searchResults.topQuery.results.length !== 0 ? limitString(searchResults.topQuery.results[0].title, 19) : limitString(searchResults.songs.results[0].title, 19)}
                                     </div>
                                     <div id="topMostResultSongArtist">
-                                        {#if searchResults.topQuery.results[0].type === "artist"}
-                                            {searchResults.topQuery.results[0].description}
-                                        {:else}
-                                            {limitString(searchResults.topQuery.results[0].primaryArtists, 32)}
-                                        {/if}
+										{#if searchResults.topQuery.results.length !== 0}
+											{#if searchResults.topQuery.results[0].type === "artist"}
+												{searchResults.topQuery.results[0].description}
+											{:else}
+												{limitString(searchResults.topQuery.results[0].primaryArtists, 32)}
+											{/if}
+										{:else}
+											{limitString(searchResults.songs.results[0].primaryArtists, 32)}
+										{/if}
                                     </div>
                                 </div>
                                 <div class="topMostResultIcons" id="topMostResultIcons">
                                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                                     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                                    <img on:click={() => fetchSong(searchResults.topQuery.results[0].id)} draggable={false} id="topMostResultPlayButton" src={play} alt="" />
+                                    <img on:click={() => fetchSong(searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].id : searchResults.songs.results[0].id)} draggable={false} id="topMostResultPlayButton" src={play} alt="" />
                                 </div>
                             </div>
                         </div>
                         <div id="extendedIcons">
                             <img draggable={false} id="topMostResultFavButton" class="searchedIcons" src={unfav} alt="" />
-                            <button on:click={() => location.href = `https://youtube.com/results?search_query=${searchResults.topQuery.results[0].title} by ${searchResults.topQuery.results[0].primaryArtists}`}>
+                            <button on:click={() => location.href = `https://youtube.com/results?search_query=${searchResults.topQuery.results.length !== 0 ? searchResults.topQuery.results[0].title : searchResults.songs.results[0].title} by ${searchResults.topQuery.results[0].primaryArtists}`}>
                                 <img class="extendedButtonIcons" id="youtubeIcon" alt="YouTube logo" src={youtube} />
                                 Search YouTube
                             </button>
@@ -352,6 +367,7 @@
                         </div>
                     </div>
 				</section>
+			<!-- {/if} -->
 
 
 				<div class="categoryTitle">Songs</div>
@@ -455,7 +471,9 @@
                     </div>
 				</section>
 	</section>
+	{/if}
 </div>
+
 
 <style>
 	#mobileContents {
