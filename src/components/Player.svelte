@@ -415,7 +415,7 @@
 		}
 		#musicComponent > img {
 			width: 18px;
-			margin-right: 0;
+			margin-right: 6px;
 		}
 		#musicComponent {
 			margin-right: 15px;

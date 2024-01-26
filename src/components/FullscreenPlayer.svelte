@@ -332,7 +332,7 @@
     
 	#playQueueContainer {
         display: none;
-		width: 90%;
+		width: 88%;
 		border-radius: 20px;
 		overflow: hidden;
 		padding-right: 20px;
@@ -434,7 +434,7 @@
 			height: 189vh;
 			align-items: center;
 			margin-left: -7vw;
-            padding-bottom: 130px;
+            padding-bottom: 16vh;
 		}
 		#songArtContainer {
 			min-height: 20em;
@@ -492,9 +492,9 @@
 		}
 		#songLyrics {
 			min-height: 50vh;
-			min-width: 90vw;
+			min-width: 84vw;
 			max-height: 50vh;
-			max-width: 90vw;
+			max-width: 84vw;
             background: #1717179f;
             margin: 10px;
             border-radius: 20px;
