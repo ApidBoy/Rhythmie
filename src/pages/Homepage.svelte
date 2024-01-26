@@ -6,7 +6,7 @@
 	import heart from '$lib/res/heart.png';
 	import defaultImg from '$lib/res/default.png';
 	import { onMount } from 'svelte';
-	import { limitString, resultsStore } from '../store.js';
+	import { limitString, resultsStore, fetchSong } from '../store.js';
 	import HomepageCardsSkeleton from '../components/skeletons/homepage/HomepageCardsSkeleton.svelte';
 
 	let greeting = 'Hey There!';
@@ -50,8 +50,7 @@
 		});
 		if (localStorage.getItem('mostRecentSong')) {
 			mostRecentSong = JSON.parse(localStorage.getItem('mostRecentSong'));
-			document.getElementById('lastPlayedContainer').style.background =
-				`url(${mostRecentSong.image[2].link})`;
+			document.getElementById('lastPlayedContainer').style.background = `url(${mostRecentSong.image[2].link})`;
 			document.getElementById('lastPlayedContainer').style.backgroundRepeat = 'no-repeat';
 			document.getElementById('lastPlayedContainer').style.backgroundSize = 'cover';
 			document.getElementById('lastPlayedContainer').style.backgroundPosition = 'center';
@@ -106,6 +105,7 @@
 		<div id="lastPlayedSectionTitle">Pick up where you left off</div>
 		<div id="secondaryHomeSection">
 			<div id="lastPlayedContainer">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div id="lastPlayed">
 					<div id="lastPlayedArt">
 						{#if mostRecentSong.length !== 0}
@@ -119,18 +119,20 @@
 							{#if mostRecentSong.length !== 0}
 								{limitString(mostRecentSong.name, 22)}
 							{:else}
-								Play something awesome!
+								Play something...
 							{/if}
 						</div>
 						<div id="lastPlayedArtist">
 							{#if mostRecentSong.length !== 0}
 								{limitString(mostRecentSong.primaryArtists, 26)}
 							{:else}
-								Your last played song will stay here.
+								Nya! Nya! Nya!
 							{/if}
 						</div>
 					</div>
-					<div id="playButtonContainer">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<div on:click={() => fetchSong(mostRecentSong.id)} id="playButtonContainer">
 						<img alt="Play" id="playButton" src={play} />
 					</div>
 				</div>
@@ -207,16 +209,9 @@
 		color: transparent;
 		-webkit-text-stroke: 1px #aaa;
 	}
-	#username:hover > #editUsername {
-		opacity: 1;
-	}
 	#editUsername {
 		margin-left: 15px;
 		opacity: 0;
-	}
-	#editUsername:hover {
-		cursor: pointer;
-		transform: scale(1.1);
 	}
 	#lastPlayedSectionTitle {
 		font-size: 18px;
@@ -232,6 +227,10 @@
 		margin-right: 5px;
 		overflow: hidden;
 		border: 1px solid #444;
+		background: url("https://miro.medium.com/v2/resize:fit:952/1*fpgvaFnX1cYA0VBs6Cz1Lg.gif");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
 	}
 	#likedSongsContainer {
 		border-top-left-radius: 0;
@@ -283,24 +282,6 @@
 		display: inline-flex;
 		margin-bottom: 20px;
 	}
-
-	#lastPlayedContainer:hover {
-		/* backdrop-filter: blur(0) contrast(130%) brightness(20%); */
-		/* transform: scale(1.03); */
-		border-radius: 400px;
-		margin-right: 40px;
-		cursor: pointer;
-		box-shadow: 0 0 20px #331368;
-	}
-	#likedSongsContainer:hover {
-		/* backdrop-filter: blur(4px) contrast(130%) brightness(20%); */
-		/* transform: scale(1.03); */
-		border-radius: 400px;
-		margin-left: 40px;
-		cursor: pointer;
-		box-shadow: 0 0 20px #331368;
-	}
-
 	#playButtonContainer {
 		position: relative;
 		right: 25px;
@@ -368,17 +349,6 @@
 		padding-bottom: 10px;
 		width: 200px;
 	}
-	#exploreMoreHomeContainer {
-		font-size: 22px;
-		text-align: center;
-		display: flex;
-		justify-content: center;
-		padding-bottom: 40px;
-	}
-	#exploreMoreHome {
-		padding-top: 10px;
-		width: 400px;
-	}
 	#homeSeparatorContainer {
 		display: flex;
 		align-items: center;
@@ -402,8 +372,34 @@
 		padding-left: 8px;
 		/*display: none;*/
 	}
-	#exploreMoreHome:hover {
-		color: #8d3eff;
+
+	@media (hover:hover) {
+	
+		#editUsername:hover {
+			cursor: pointer;
+			transform: scale(1.1);
+		}
+		#username:hover > #editUsername {
+			opacity: 1;
+		}
+
+		#lastPlayedContainer:hover {
+			/* backdrop-filter: blur(0) contrast(130%) brightness(20%); */
+			/* transform: scale(1.03); */
+			border-radius: 400px;
+			margin-right: 40px;
+			cursor: pointer;
+			box-shadow: 0 0 20px #331368;
+		}
+		#likedSongsContainer:hover {
+			/* backdrop-filter: blur(4px) contrast(130%) brightness(20%); */
+			/* transform: scale(1.03); */
+			border-radius: 400px;
+			margin-left: 40px;
+			cursor: pointer;
+			box-shadow: 0 0 20px #331368;
+		}
+
 	}
 
 	@media only screen and (max-width: 1800px) {
