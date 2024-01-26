@@ -12,7 +12,7 @@
 	import next from '$lib/res/next.png';
 	import repeat from '$lib/res/repeat.png';
 	import uparrow from '$lib/res/up-arrow.png';
-	import { playerData, converter } from '../store';
+	import { playerData, converter, limitString } from '../store';
 	import PlayerSkeleton from './skeletons/PlayerSkeleton.svelte';
 	import { onMount } from 'svelte';
 	import { activeRouteDerived, setActiveRoute } from '../activeRoute';
@@ -46,8 +46,8 @@
 		setTimeout(() => {
 			if (songDetails.length !== 0) {
 				localStorage.setItem('mostRecentSong', JSON.stringify(songDetails.data[0]));
-				document.getElementById('songName').innerHTML = songDetails.data[0].name;
-				document.getElementById('songArtist').innerHTML = songDetails.data[0].primaryArtists;
+				document.getElementById('songName').innerHTML = limitString(songDetails.data[0].name, 24);
+				document.getElementById('songArtist').innerHTML = limitString(songDetails.data[0].primaryArtists, 30);
 				playPause();
 			}
 		}, 1000);
@@ -73,12 +73,14 @@
 			interval();
 			playState = false;
 			playPauseIcon = pause;
-			playButton.style.margin = '5px 2px';
+			if (!window.matchMedia("(max-width: 970px)"))
+				playButton.style.margin = '5px 2px';
 		} else {
 			audio.pause();
 			playState = true;
 			playPauseIcon = play;
-			playButton.style.margin = '5px 10px';
+			if (!window.matchMedia("(max-width: 970px)"))
+				playButton.style.margin = '5px 10px';
 		}
 	};
 	const handleArtClick = () => {
@@ -113,8 +115,8 @@
 			</a>
 			<div id="songInfo">
 				<div id="songTitle">
-					<span id="songName">{songDetails.data[0].name}</span>
-					<div id="songArtist">{songDetails.data[0].primaryArtists}</div>
+					<span id="songName">{limitString(songDetails.data[0].name, 24)}</span>
+					<div id="songArtist">{limitString(songDetails.data[0].primaryArtists, 26)}</div>
 				</div>
 			</div>
 		</div>
@@ -430,11 +432,14 @@
 		}
 	}
 	@media only screen and (max-width: 600px) {
+		#songArt {
+			border-radius: .5rem;
+		}
 		#musicInfo {
-			font-size: 1em;
+			font-size: .9em;
 		}
 		#songArtist {
-			font-size: .9em;
+			font-size: .8em;
 		}
 		#musicInfo {
 			bottom: 15px;

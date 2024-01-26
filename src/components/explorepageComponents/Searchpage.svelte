@@ -321,13 +321,13 @@
                             <div id="topMostResultSongInfo">
                                 <div id="topMostActualInfo">
                                     <div id="topMostResultSongTitle">
-                                        {searchResults.topQuery.results[0].title}
+                                        {limitString(searchResults.topQuery.results[0].title, 19)}
                                     </div>
                                     <div id="topMostResultSongArtist">
                                         {#if searchResults.topQuery.results[0].type === "artist"}
                                             {searchResults.topQuery.results[0].description}
                                         {:else}
-                                            {searchResults.topQuery.results[0].primaryArtists}
+                                            {limitString(searchResults.topQuery.results[0].primaryArtists, 32)}
                                         {/if}
                                     </div>
                                 </div>
@@ -374,8 +374,8 @@
 							{/if}
 							<div id="searchedSongInfo">
 								<div id="actualInfo">
-									<div id="searchedSongTitle">{element.title}</div>
-									<div id="searchedSongArtist">{element.primaryArtists}</div>
+									<div id="searchedSongTitle">{limitString(element.title, 24)}</div>
+									<div id="searchedSongArtist">{limitString(element.primaryArtists, 22)}</div>
 								</div>
 								<div class="topSearchIcons" id="searchedIcons">
 									<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -416,7 +416,7 @@
 								<img alt="Album art" src={defaultImg} class="searchAlbumResults" />
 							{/if}
                                 <div id="searchedAlbumInfo">
-                                    <div id="searchedAlbumTitle">{limitString(element.title, 18)}</div>
+                                    <div id="searchedAlbumTitle">{limitString(element.title, 15)}</div>
                                     <div id="searchedAlbumArtist">{limitString(element.artist, 14)}</div>
                                 </div>
 						</div>
@@ -571,22 +571,10 @@
     }
 
     #topMostResultIcons {
-        animation: topMostResultIcons 6s;
-		/* background: #fff; */
         width: 100%;
 		margin-right: 40px;
 		display: flex;
 		justify-content: flex-end;
-		/* align-items: center; */
-    }
-
-    @keyframes topMostResultIcons {
-        from {
-            display: none;
-        }
-        to {
-            display: block;
-        }
     }
 
     #topMostResultPlayButton {
@@ -612,7 +600,7 @@
 	}
 
 	#topMostResultSongInfo {
-		margin-left: 1.4em;
+		margin-left: .8em;
 		display: flex;
 		align-items: center;
 		/* background: #f00; */
@@ -622,6 +610,8 @@
 
 	#topMostActualInfo {
 		width: 100%;
+		/* background: #0f0; */
+  		white-space: nowrap;
 	}
 
 	#topMostResultSongTitle {
@@ -1209,6 +1199,10 @@
 			margin-top: 4vh;
 		}
 
+		#topMostResultIcons {
+			margin-right: 26px;
+		}
+
 	
 		.searchCategory {
 			margin: 0 4px;
@@ -1247,10 +1241,10 @@
 
 		
 		#topMostResultSongTitle {
-			font-size: 1.2em;
+			font-size: .9em;
 		}
 		#topMostResultSongArtist {
-			font-size: .8em;
+			font-size: .7em;
 		}
 
 

@@ -6,7 +6,7 @@
 	import heart from '$lib/res/heart.png';
 	import defaultImg from '$lib/res/default.png';
 	import { onMount } from 'svelte';
-	import { resultsStore } from '../store.js';
+	import { limitString, resultsStore } from '../store.js';
 	import HomepageCardsSkeleton from '../components/skeletons/homepage/HomepageCardsSkeleton.svelte';
 
 	let greeting = 'Hey There!';
@@ -117,14 +117,14 @@
 					<div id="lastPlayedDetails">
 						<div id="lastPlayedTitle">
 							{#if mostRecentSong.length !== 0}
-								{mostRecentSong.name}
+								{limitString(mostRecentSong.name, 22)}
 							{:else}
 								Play something awesome!
 							{/if}
 						</div>
 						<div id="lastPlayedArtist">
 							{#if mostRecentSong.length !== 0}
-								{mostRecentSong.primaryArtists}
+								{limitString(mostRecentSong.primaryArtists, 26)}
 							{:else}
 								Your last played song will stay here.
 							{/if}
@@ -150,20 +150,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div id="likedSongsButtonContainer">
-				<div id="likedSongs">
-					<div id="likedSongsHeart">
-						<img alt="Favorite" id="heartIcon" src={heart} />
-					</div>
-					<div id="likedSongsDetails">
-						<div id="likedSongsTitle">Your liked songs</div>
-						<div id="likedSongsNumber">0 Songs</div>
-					</div>
-					<div id="playButtonEffectContainer">
-						<img alt="Play" id="playButtonEffect" src={play} />
-					</div>
-				</div>
-			</div> -->
 		<div id="homePageTitleContainer">
 			<div id="homePageTitle">
 				Trending now <img
@@ -489,11 +475,13 @@
 		#heartIcon {
 			width: 40px;
 			padding: 12px;
+			border: 1px solid #444;
 		}
 		#lastPlayedContainer {
 			margin-bottom: -8px;
 		}
 		#homePageTitleContainer {
+			margin-top: 10px;
 			font-size: 1.2em;
 		}
 		#fireEmoji {
@@ -509,10 +497,10 @@
 			grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .1fr;
 		}
 		#lastPlayedTitle, #likedSongsTitle {
-			font-size: 1em;
+			font-size: .9em;
 		}
 		#lastPlayedArtist, #likedSongsNumber {
-			font-size: .9em;
+			font-size: .8em;
 		}
 		#playButtonContainer {
 			position: relative;
@@ -528,6 +516,10 @@
 		}
 		#greeting {
 			font-size: 1.6em;
+		}
+		#lastPlayedArt > img {
+			width: 64px;
+			border: 1px solid #444;
 		}
 	}
 
