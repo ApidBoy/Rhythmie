@@ -50,7 +50,7 @@
 	}
 
 	const handleSearch = async () => {
-		await fetch(`https://saavn.me/search/all?query=${searchText}`)
+		await fetch(`https://saavn.dev/search/all?query=${searchText}`)
 		.then((response) => response.json())
 		.then((data) => {
 			console.log("Data -", data);

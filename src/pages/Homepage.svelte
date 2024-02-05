@@ -33,7 +33,7 @@
 
 	const fetchHomepageData = async () => {
 		try {
-			let url = 'https://saavn.me/modules?language=hindi,english';
+			let url = 'https://saavn.dev/modules?language=hindi,english';
 			let homeData = await fetch(url);
 			let parsedData = await homeData.json();
 			resultsStore.set(parsedData);
