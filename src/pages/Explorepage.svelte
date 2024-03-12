@@ -28,7 +28,7 @@
 	}
 
 	const handleSearch = async () => {
-		await fetch(`https://saavn.dev/api/search/all?query=${searchText}`)
+		await fetch(`https://saavn.dev/api/search/?query=${searchText}`)
 		.then((response) => response.json())
 		.then((data) => {
 			searchResultStore.set(data.data);
