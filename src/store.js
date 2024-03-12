@@ -23,7 +23,7 @@ export const converter = (value) => {
 }
 
 export const fetchSong = async (songID) => {
-    let data = await fetch(`https://saavn.dev/songs?id=${songID}`);
+    let data = await fetch(`https://saavn.dev/api/songs?id=${songID}`);
     let parsedData = await data.json();
     playerData.set(parsedData);
     playState.set(true)
